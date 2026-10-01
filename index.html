@@ -1,0 +1,4301 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PixelQuest To-Do</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect width='16' height='16' fill='%23d4c2fc'/%3E%3Crect x='3' y='1' width='2' height='5' fill='%23ffffff' stroke='%233a3350'/%3E%3Crect x='10' y='1' width='2' height='5' fill='%23ffffff' stroke='%233a3350'/%3E%3Crect x='2' y='5' width='11' height='8' fill='%23ffffff' stroke='%233a3350'/%3E%3Crect x='4' y='8' width='2' height='3' fill='%233a3350'/%3E%3Crect x='9' y='8' width='2' height='3' fill='%233a3350'/%3E%3Crect x='6' y='10' width='3' height='1' fill='%23ff9ebb'/%3E%3C/svg%3E" />
+    <meta name="description" content="A cute retro 8-bit pixel-art interactive to-do web app with living scene, priorities, and sound effects." />
+    <meta property="og:title" content="PixelQuest To-Do" />
+    <meta property="og:description" content="A cute retro 8-bit pixel-art interactive to-do web app with living scene, priorities, and sound effects." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Google Fonts: 8-Bit Pixel Display & High-Legibility Pixel Body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ============================================================
+         PIXELQUEST RETRO 8-BIT DESIGN SYSTEM
+         ============================================================ */
+      :root {
+        --c-dark: #3a3350;
+        --c-dark-shadow: #241e33;
+        --c-cream-bg: #f7f4ea;
+        --c-panel-body: #fffef8;
+        --c-panel-body-alt: #fcfaf3;
+
+        /* Pastel Palette */
+        --c-sky-blue: #96d6f2;
+        --c-sky-blue-dark: #70bee0;
+        --c-mint-green: #a7e8bd;
+        --c-mint-green-dark: #7fd49b;
+        --c-pale-yellow: #fde883;
+        --c-pale-yellow-dark: #f6d44a;
+        --c-baby-pink: #fbc0d4;
+        --c-baby-pink-dark: #f69cb8;
+        --c-lavender: #d4c2fc;
+        --c-lavender-dark: #b89ff7;
+        --c-peach: #ffd3b6;
+
+        /* Priority Colors */
+        --p-low: #38a169;
+        --p-low-bg: #e6f9ed;
+        --p-med: #dd6b20;
+        --p-med-bg: #fff5eb;
+        --p-high: #e53e3e;
+        --p-high-bg: #feebec;
+
+        /* Typography */
+        --font-pixel-heading: "Press Start 2P", monospace;
+        --font-pixel-body: "VT323", monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: none;
+        -moz-osx-font-smoothing: unset;
+        image-rendering: pixelated;
+      }
+
+      body {
+        font-family: var(--font-pixel-body);
+        font-size: 21px;
+        line-height: 1.3;
+        color: var(--c-dark);
+        background-color: #f7f3e8;
+        /* Full-color 8-Bit Pixel Game Doodles Pattern */
+        background-image: 
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260' shape-rendering='crispEdges'%3E%3C!-- Faint grid --%3E%3Cpath d='M0 0h260v260H0z' fill='%23fbf8ee'/%3E%3Cpath d='M0 65h260M0 130h260M0 195h260M65 0v260M130 0v260M195 0v260' stroke='%23ede5ce' stroke-width='1' stroke-dasharray='2,6' fill='none'/%3E%3C!-- 1. Red Super Mushroom (22, 18) --%3E%3Cg transform='translate(22, 18)'%3E%3Crect x='4' y='0' width='16' height='12' fill='%23ff4757'/%3E%3Crect x='2' y='4' width='20' height='8' fill='%23ff4757'/%3E%3Crect x='6' y='2' width='4' height='4' fill='%23ffffff'/%3E%3Crect x='15' y='5' width='5' height='5' fill='%23ffffff'/%3E%3Crect x='6' y='12' width='12' height='8' fill='%23ffeaa7'/%3E%3Crect x='8' y='14' width='2' height='4' fill='%233a3350'/%3E%3Crect x='14' y='14' width='2' height='4' fill='%233a3350'/%3E%3C/g%3E%3C!-- 2. Glowing Golden Star (150, 16) --%3E%3Cg transform='translate(150, 16)'%3E%3Cpolygon points='10,0 13,7 20,8 15,13 16,20 10,16 4,20 5,13 0,8 7,7' fill='%23ffa502' stroke='%233a3350' stroke-width='1.2'/%3E%3Ccircle cx='8' cy='10' r='1' fill='%233a3350'/%3E%3Ccircle cx='12' cy='10' r='1' fill='%233a3350'/%3E%3C/g%3E%3C!-- 3. Emerald Health Flask (210, 20) --%3E%3Cg transform='translate(210, 20)'%3E%3Crect x='6' y='0' width='6' height='3' fill='%23cd6133'/%3E%3Crect x='7' y='3' width='4' height='4' fill='%2370a1ff'/%3E%3Crect x='2' y='7' width='14' height='14' fill='%232ed573'/%3E%3Crect x='4' y='9' width='3' height='3' fill='%23ffffff' opacity='0.7'/%3E%3Crect x='10' y='12' width='4' height='4' fill='%2310ac84'/%3E%3C/g%3E%3C!-- 4. Pink Pixel Heart (85, 80) --%3E%3Cg transform='translate(85, 80)'%3E%3Crect x='2' y='0' width='6' height='6' fill='%23ff5252'/%3E%3Crect x='10' y='0' width='6' height='6' fill='%23ff5252'/%3E%3Crect x='0' y='4' width='18' height='6' fill='%23ff5252'/%3E%3Crect x='2' y='10' width='14' height='4' fill='%23ff5252'/%3E%3Crect x='4' y='14' width='10' height='3' fill='%23ff5252'/%3E%3Crect x='7' y='17' width='4' height='3' fill='%23ff5252'/%3E%3Crect x='3' y='2' width='3' height='3' fill='%23ffffff'/%3E%3C/g%3E%3C!-- 5. Lilac Retro Gamepad (175, 85) --%3E%3Cg transform='translate(175, 85)'%3E%3Crect x='0' y='4' width='26' height='14' rx='2' fill='%239c88ff' stroke='%233a3350' stroke-width='1.5'/%3E%3Crect x='4' y='8' width='6' height='2' fill='%232f3542'/%3E%3Crect x='6' y='6' width='2' height='6' fill='%232f3542'/%3E%3Ccircle cx='18' cy='12' r='2' fill='%23ff4757'/%3E%3Ccircle cx='22' cy='9' r='2' fill='%23ffa502'/%3E%3C/g%3E%3C!-- 6. Cyan Crystal Gem (20, 150) --%3E%3Cg transform='translate(20, 150)'%3E%3Cpolygon points='10,0 20,7 16,19 4,19 0,7' fill='%2300d2d3' stroke='%233a3350' stroke-width='1.5'/%3E%3Cpolygon points='10,0 14,7 10,19 6,7' fill='%2354a0ff'/%3E%3Cpolygon points='10,0 14,7 6,7' fill='%23ffffff' opacity='0.8'/%3E%3C/g%3E%3C!-- 7. Red Cherries (100, 155) --%3E%3Cg transform='translate(100, 155)'%3E%3Ccircle cx='5' cy='15' r='5' fill='%23eb2f06' stroke='%233a3350' stroke-width='1.2'/%3E%3Ccircle cx='15' cy='15' r='5' fill='%23eb2f06' stroke='%233a3350' stroke-width='1.2'/%3E%3Ccircle cx='4' cy='13' r='1.5' fill='%23ffffff'/%3E%3Ccircle cx='14' cy='13' r='1.5' fill='%23ffffff'/%3E%3Cpath d='M5 10 C8 3, 10 3, 12 1 M15 10 C13 3, 12 3, 12 1' stroke='%2310ac84' stroke-width='2' fill='none'/%3E%3Cpolygon points='12,1 17,2 15,6' fill='%232ed573'/%3E%3C/g%3E%3C!-- 8. Golden Quest Coin (185, 155) --%3E%3Cg transform='translate(185, 155)'%3E%3Ccircle cx='10' cy='10' r='9' fill='%23ffd32a' stroke='%233a3350' stroke-width='1.5'/%3E%3Ccircle cx='10' cy='10' r='6' fill='%23ff9f1a'/%3E%3Crect x='9' y='6' width='2' height='8' fill='%23ffffff'/%3E%3C/g%3E%3C!-- 9. Steel Knight Sword (40, 220) --%3E%3Cg transform='translate(40, 220)'%3E%3Cpolygon points='2,2 14,14 16,12 4,0' fill='%23a4b0be' stroke='%233a3350' stroke-width='1'/%3E%3Crect x='13' y='13' width='5' height='2' fill='%23ffa502' transform='rotate(45 13 13)'/%3E%3Crect x='16' y='16' width='4' height='2' fill='%23b33939' transform='rotate(45 16 16)'/%3E%3Ccircle cx='20' cy='20' r='1.5' fill='%23ffa502'/%3E%3C/g%3E%3C!-- 10. Cute Pixel Cloud (125, 215) --%3E%3Cg transform='translate(125, 215)'%3E%3Crect x='4' y='6' width='16' height='8' fill='%23ffffff' stroke='%233a3350' stroke-width='1'/%3E%3Crect x='8' y='2' width='8' height='6' fill='%23ffffff'/%3E%3Ccircle cx='8' cy='10' r='1' fill='%23ff9ff3'/%3E%3Ccircle cx='16' cy='10' r='1' fill='%23ff9ff3'/%3E%3C/g%3E%3C!-- 11. Cozy Pixel Mug (215, 215) --%3E%3Cg transform='translate(215, 215)'%3E%3Crect x='2' y='5' width='12' height='12' fill='%23ff793f' stroke='%233a3350' stroke-width='1.2'/%3E%3Crect x='14' y='8' width='4' height='6' fill='none' stroke='%233a3350' stroke-width='1.2'/%3E%3Cpath d='M5 2 Q6 0 7 2 Q8 4 9 2' stroke='%23c7ecee' stroke-width='1.5' fill='none'/%3E%3C/g%3E%3C/svg%3E");
+        background-size: 260px 260px;
+        min-height: 100vh;
+        padding: 24px 14px 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      /* Container */
+      .app-wrapper {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+
+      /* ============================================================
+         RETRO WINDOW ARCHITECTURE
+         Outer dark border with offset shadow; inner light cream body
+         Stepped pixel corners (not rounded)
+         ============================================================ */
+      .pixel-window {
+        background-color: var(--c-dark);
+        border: 4px solid var(--c-dark);
+        box-shadow: 5px 5px 0 var(--c-dark-shadow);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .window-titlebar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+        border-bottom: 4px solid var(--c-dark);
+        user-select: none;
+      }
+
+      .titlebar-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .titlebar-title {
+        font-family: var(--font-pixel-heading);
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--c-dark);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      .window-buttons {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .win-btn {
+        width: 18px;
+        height: 18px;
+        background: #ffffff;
+        border: 2px solid var(--c-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-pixel-heading);
+        font-size: 9px;
+        font-weight: bold;
+        color: var(--c-dark);
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
+        transition: transform 0.1s ease;
+      }
+
+      .win-btn:active {
+        transform: translate(1px, 1px);
+      }
+
+      .window-body {
+        background-color: var(--c-panel-body);
+        color: var(--c-dark);
+        padding: 20px;
+        position: relative;
+      }
+
+      /* Distinct Window Title Bar Themes */
+      .theme-sky .window-titlebar { background-color: var(--c-sky-blue); }
+      .theme-mint .window-titlebar { background-color: var(--c-mint-green); }
+      .theme-yellow .window-titlebar { background-color: var(--c-pale-yellow); }
+      .theme-pink .window-titlebar { background-color: var(--c-baby-pink); }
+      .theme-lavender .window-titlebar { background-color: var(--c-lavender); }
+
+      /* ============================================================
+         CSS-ONLY PIXEL ART DECORATIONS (INSIDE LAYOUT ONLY)
+         ============================================================ */
+      .css-pixel-heart {
+        display: inline-block;
+        width: 3px;
+        height: 3px;
+        background: transparent;
+        box-shadow: 
+          3px 0 0 #ff6584, 6px 0 0 #ff6584, 12px 0 0 #ff6584, 15px 0 0 #ff6584,
+          0 3px 0 #ff6584, 3px 3px 0 #ff6584, 6px 3px 0 #ff6584, 9px 3px 0 #ff6584, 12px 3px 0 #ff6584, 15px 3px 0 #ff6584, 18px 3px 0 #ff6584,
+          0 6px 0 #ff6584, 3px 6px 0 #ff6584, 6px 6px 0 #ff6584, 9px 6px 0 #ff6584, 12px 6px 0 #ff6584, 15px 6px 0 #ff6584, 18px 6px 0 #ff6584,
+          3px 9px 0 #ff6584, 6px 9px 0 #ff6584, 9px 9px 0 #ff6584, 12px 9px 0 #ff6584, 15px 9px 0 #ff6584,
+          6px 12px 0 #ff6584, 9px 12px 0 #ff6584, 12px 12px 0 #ff6584,
+          9px 15px 0 #ff6584;
+        margin-right: 22px;
+        margin-bottom: 16px;
+        vertical-align: middle;
+      }
+
+      .css-pixel-star {
+        display: inline-block;
+        width: 3px;
+        height: 3px;
+        background: transparent;
+        box-shadow: 
+          9px 0 0 #ffcf40,
+          6px 3px 0 #ffcf40, 9px 3px 0 #ffcf40, 12px 3px 0 #ffcf40,
+          0 6px 0 #ffcf40, 3px 6px 0 #ffcf40, 6px 6px 0 #ffcf40, 9px 6px 0 #ffcf40, 12px 6px 0 #ffcf40, 15px 6px 0 #ffcf40, 18px 6px 0 #ffcf40,
+          3px 9px 0 #ffcf40, 6px 9px 0 #ffcf40, 9px 9px 0 #ffcf40, 12px 9px 0 #ffcf40, 15px 9px 0 #ffcf40,
+          6px 12px 0 #ffcf40, 9px 12px 0 #ffcf40, 12px 12px 0 #ffcf40,
+          3px 15px 0 #ffcf40, 15px 15px 0 #ffcf40;
+        margin-right: 22px;
+        margin-bottom: 16px;
+        vertical-align: middle;
+      }
+
+      /* ============================================================
+         HEADER LIVING SCENE (ACTUAL BACKGROUND BEHIND TITLE)
+         Clipped with overflow: hidden; position: relative
+         ============================================================ */
+      .header-living-window {
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Time Controller in Window Header */
+      .time-controls-group {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: rgba(255, 255, 255, 0.7);
+        border: 2px solid var(--c-dark);
+        padding: 2px 4px;
+      }
+
+      .time-toggle-btn {
+        font-family: var(--font-pixel-heading);
+        font-size: 8px;
+        background: transparent;
+        border: 1px solid transparent;
+        color: var(--c-dark);
+        padding: 3px 6px;
+        cursor: pointer;
+        transition: background 0.15s, transform 0.1s;
+        line-height: 1;
+      }
+
+      .time-toggle-btn:hover {
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .time-toggle-btn.active {
+        background: var(--c-dark);
+        color: #ffffff;
+        font-weight: bold;
+      }
+
+      .scene-viewport {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        min-height: 250px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px 42px;
+      }
+
+      /* Sky Layer with Smooth Day / Sunset / Night transitions */
+      .sky-layer {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        transition: background 1.5s ease-in-out;
+      }
+
+      .sky-layer.theme-day {
+        background: linear-gradient(180deg, #5ba4ff 0%, #a2ddfc 60%, #e2f7ff 100%);
+      }
+
+      .sky-layer.theme-sunset {
+        background: linear-gradient(180deg, #d63031 0%, #ff7675 45%, #ffd460 100%);
+      }
+
+      .sky-layer.theme-night {
+        background: linear-gradient(180deg, #0c0b1e 0%, #1e1b4b 60%, #2e1065 100%);
+      }
+
+      /* CELESTIAL SUN & MOON TRAJECTORY (Moving along an Arc across the Sky) */
+      .celestial-system {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      /* Sun moving across sky */
+      .celestial-sun-track {
+        position: absolute;
+        width: 44px;
+        height: 44px;
+        top: 25px;
+        left: 20%;
+        transition: all 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 2;
+      }
+
+      .theme-day .celestial-sun-track {
+        top: 22px;
+        left: 35%;
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .theme-sunset .celestial-sun-track {
+        top: 65px;
+        left: 82%;
+        opacity: 0.95;
+        transform: scale(1.15);
+      }
+
+      .theme-night .celestial-sun-track {
+        top: 180px;
+        left: 95%;
+        opacity: 0;
+        transform: scale(0.6);
+      }
+
+      .pixel-sun {
+        width: 36px;
+        height: 36px;
+        background-color: #ffe600;
+        border: 3px solid var(--c-dark);
+        box-shadow: 0 0 16px #ffbe1a, 2px 2px 0 var(--c-dark-shadow);
+        position: relative;
+        animation: sunRaysPulse 4s infinite alternate ease-in-out;
+      }
+
+      @keyframes sunRaysPulse {
+        0% { transform: rotate(0deg) scale(1); box-shadow: 0 0 10px #ffe600; }
+        100% { transform: rotate(8deg) scale(1.06); box-shadow: 0 0 20px #ff9f1a; }
+      }
+
+      /* Moon moving across sky */
+      .celestial-moon-track {
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        top: 180px;
+        left: 5%;
+        opacity: 0;
+        transition: all 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 2;
+      }
+
+      .theme-day .celestial-moon-track {
+        top: 180px;
+        left: 5%;
+        opacity: 0;
+        transform: scale(0.6);
+      }
+
+      .theme-sunset .celestial-moon-track {
+        top: 85px;
+        left: 12%;
+        opacity: 0.5;
+        transform: scale(0.85);
+      }
+
+      .theme-night .celestial-moon-track {
+        top: 24px;
+        left: 72%;
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .pixel-moon {
+        width: 34px;
+        height: 34px;
+        position: relative;
+        animation: moonFloat 8s infinite alternate ease-in-out;
+      }
+
+      @keyframes moonFloat {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-4px); }
+      }
+
+      /* Twinkling Night Stars */
+      .pixel-star-field {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        transition: opacity 1.2s ease;
+      }
+
+      .theme-day .pixel-star-field { opacity: 0; }
+      .theme-sunset .pixel-star-field { opacity: 0.4; }
+      .theme-night .pixel-star-field { opacity: 1; }
+
+      .star-sprite {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: #ffffff;
+        box-shadow: 0 0 4px #ffffff;
+        animation: starTwinkle 3s infinite ease-in-out alternate;
+      }
+
+      .star-1 { top: 18px; left: 12%; animation-delay: 0.3s; }
+      .star-2 { top: 44px; left: 28%; animation-delay: 1.1s; }
+      .star-3 { top: 16px; left: 52%; animation-delay: 1.9s; }
+      .star-4 { top: 38px; left: 86%; animation-delay: 0.7s; }
+      .star-5 { top: 62px; left: 68%; animation-delay: 2.2s; }
+      .star-6 { top: 28px; left: 92%; animation-delay: 1.5s; }
+
+      @keyframes starTwinkle {
+        0% { opacity: 0.2; transform: scale(0.8); }
+        100% { opacity: 1; transform: scale(1.2); }
+      }
+
+      /* Animated Pixel Clouds Drifting at Staggered Speeds */
+      .cloud-sprite {
+        position: absolute;
+        z-index: 2;
+        pointer-events: none;
+        transition: opacity 1s, filter 1s;
+      }
+
+      .theme-night .cloud-sprite {
+        opacity: 0.45;
+        filter: brightness(0.65) drop-shadow(0 0 6px #2e1065);
+      }
+
+      .cloud-1 {
+        top: 26px;
+        left: -25%;
+        animation: cloudDriftSlow 34s infinite linear;
+      }
+
+      .cloud-2 {
+        top: 60px;
+        left: -30%;
+        animation: cloudDriftFast 26s infinite linear;
+        animation-delay: 8s;
+      }
+
+      .cloud-3 {
+        top: 14px;
+        left: -28%;
+        animation: cloudDriftSlow 44s infinite linear;
+        animation-delay: 16s;
+      }
+
+      @keyframes cloudDriftSlow {
+        0% { left: -25%; }
+        100% { left: 125%; }
+      }
+
+      @keyframes cloudDriftFast {
+        0% { left: -30%; }
+        100% { left: 130%; }
+      }
+
+      /* Animated Flying Birds with Wing Flap */
+      .bird-sprite {
+        position: absolute;
+        z-index: 3;
+        pointer-events: none;
+        transition: opacity 1s;
+      }
+
+      .theme-night .bird-sprite {
+        opacity: 0;
+      }
+
+      .bird-1 {
+        top: 30px;
+        left: -40px;
+        animation: birdFlightOne 30s infinite linear;
+      }
+
+      .bird-2 {
+        top: 54px;
+        left: -40px;
+        animation: birdFlightTwo 42s infinite linear;
+        animation-delay: 12s;
+      }
+
+      .wing-left, .wing-right {
+        animation: birdWingFlap 0.4s infinite alternate ease-in-out;
+        transform-origin: center;
+      }
+
+      @keyframes birdWingFlap {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-3px); }
+      }
+
+      @keyframes birdFlightOne {
+        0% { transform: translateX(0); }
+        50% { transform: translateX(1000px); }
+        50.01% { transform: translateX(1000px) scaleX(-1); }
+        100% { transform: translateX(0) scaleX(-1); }
+      }
+
+      @keyframes birdFlightTwo {
+        0% { transform: translateX(0); }
+        50% { transform: translateX(1000px); }
+        50.01% { transform: translateX(1000px) scaleX(-1); }
+        100% { transform: translateX(0) scaleX(-1); }
+      }
+
+      /* Ground Grass Line */
+      .scene-ground {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 22px;
+        background-color: #68c04e;
+        border-top: 3px solid var(--c-dark);
+        z-index: 4;
+        transition: background-color 1.2s;
+      }
+
+      .theme-sunset .scene-ground { background-color: #559c3d; }
+      .theme-night .scene-ground { background-color: #2b5622; }
+
+      .scene-ground-soil {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background-color: #4b8938;
+      }
+
+      /* Trees on Grass Line */
+      .scene-tree-pine {
+        position: absolute;
+        bottom: 18px;
+        left: 20px;
+        z-index: 4;
+      }
+
+      .scene-tree-oak {
+        position: absolute;
+        bottom: 18px;
+        right: 18px;
+        z-index: 4;
+      }
+
+      /* Two extra small pines clustered beside the oak on the right */
+      .scene-tree-pine-r2,
+      .scene-tree-pine-r3 {
+        position: absolute;
+        bottom: 18px;
+        z-index: 3;
+        transform-origin: bottom center;
+        animation: treeSwayGentle 9s infinite ease-in-out;
+      }
+      .scene-tree-pine-r2 { right: 72px; animation-delay: 1.5s; }
+      .scene-tree-pine-r3 { right: 96px; animation-delay: 4s; }
+
+      @keyframes treeSwayGentle {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(1.5deg); }
+      }
+
+      /* Owl on the Oak Branch */
+      .tree-owl {
+        position: absolute;
+        bottom: 78px;
+        right: 32px;
+        z-index: 5;
+        transform-origin: bottom center;
+        animation: owlBreathe 4s infinite ease-in-out;
+      }
+
+      @keyframes owlBreathe {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.04) translateY(-1px); }
+      }
+
+      .owl-eyes-day { display: block; }
+      .owl-eyes-night { display: none; }
+
+      .theme-night .owl-eyes-day { display: none; }
+      .theme-night .owl-eyes-night {
+        display: block;
+        animation: owlEyeGlow 2.5s infinite alternate ease-in-out;
+      }
+
+      @keyframes owlEyeGlow {
+        0%, 90% { transform: scale(1); }
+        95% { transform: scaleY(0.1); }
+        100% { transform: scale(1.1); filter: drop-shadow(0 0 3px #ffe600); }
+      }
+
+      /* Animals on the Grass: Fawn & Bunny */
+      .grass-critter-fawn {
+        position: absolute;
+        bottom: 18px;
+        left: 70px;
+        z-index: 5;
+      }
+
+      .fawn-awake { display: block; animation: fawnGraze 6s infinite ease-in-out; }
+      .fawn-asleep { display: none; animation: animalSleepBreathe 3.5s infinite ease-in-out; }
+
+      .theme-night .fawn-awake { display: none; }
+      .theme-night .fawn-asleep { display: block; }
+
+      @keyframes fawnGraze {
+        0%, 100% { transform: translateY(0); }
+        35% { transform: translateY(2px) rotate(3deg); }
+        70% { transform: translateY(0); }
+      }
+
+      .grass-critter-bunny {
+        position: absolute;
+        bottom: 18px;
+        right: 95px;
+        z-index: 5;
+      }
+
+      .bunny-awake { display: block; animation: wildBunnyNibble 5s infinite ease-in-out; }
+      .bunny-asleep { display: none; animation: animalSleepBreathe 3s infinite ease-in-out; }
+
+      .theme-night .bunny-awake { display: none; }
+      .theme-night .bunny-asleep { display: block; }
+
+      @keyframes wildBunnyNibble {
+        0%, 100% { transform: translateY(0); }
+        45% { transform: translateY(-3px); }
+        60% { transform: translateY(0); }
+      }
+
+      @keyframes animalSleepBreathe {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.03) translateY(-1px); }
+      }
+
+      /* Sleeping Zzz Floating Bubbles */
+      .zzz-container {
+        position: absolute;
+        top: -16px;
+        right: -8px;
+        font-family: var(--font-pixel-heading);
+        font-size: 8px;
+        color: #e0e7ff;
+        display: none;
+        pointer-events: none;
+      }
+
+      .theme-night .zzz-container {
+        display: block;
+        animation: floatZzz 3s infinite ease-out;
+      }
+
+      @keyframes floatZzz {
+        0% { opacity: 0; transform: translateY(4px) scale(0.6); }
+        50% { opacity: 1; transform: translateY(-8px) scale(1); }
+        100% { opacity: 0; transform: translateY(-18px) scale(1.2); }
+      }
+
+      /* Colorful Blooming Flowers on the Grass */
+      .scene-flower {
+        position: absolute;
+        bottom: 18px;
+        z-index: 4;
+        transform-origin: bottom center;
+      }
+
+      .flower-1 { left: 145px; animation: flowerSway 8s infinite ease-in-out; }
+      .flower-2 { left: 165px; animation: flowerSway 11s infinite ease-in-out 2s; }
+      .flower-3 { right: 150px; animation: flowerSway 9s infinite ease-in-out 4s; }
+      .flower-4 { right: 175px; animation: flowerSway 7s infinite ease-in-out 1s; }
+
+      @keyframes flowerSway {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(4deg) scale(1.05); }
+      }
+
+      /* Animated Fluttering Butterfly Visiting Flowers */
+      .scene-butterfly {
+        position: absolute;
+        bottom: 34px;
+        left: 150px;
+        z-index: 5;
+        animation: butterflyHover 12s infinite ease-in-out;
+      }
+
+      .theme-night .scene-butterfly {
+        animation: none;
+        bottom: 24px;
+        left: 165px;
+      }
+
+      .butterfly-wing {
+        animation: butterflyFlap 0.25s infinite alternate ease-in-out;
+        transform-origin: center;
+      }
+
+      .theme-night .butterfly-wing {
+        animation: none;
+      }
+
+      @keyframes butterflyFlap {
+        0% { transform: scaleX(1); }
+        100% { transform: scaleX(-0.8); }
+      }
+
+      @keyframes butterflyHover {
+        0% { transform: translate(0, 0); }
+        25% { transform: translate(16px, -12px); }
+        50% { transform: translate(32px, -4px); }
+        75% { transform: translate(14px, -16px); }
+        100% { transform: translate(0, 0); }
+      }
+
+      /* ============================================================
+         SKY FIREWORKS PARTICLE EFFECT (100% COMPLETION CELEBRATION)
+         ============================================================ */
+      .sky-fireworks-container {
+        position: absolute;
+        inset: 0;
+        z-index: 8;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      /* Single Firework Launch & Detonation Cluster */
+      .firework-cluster {
+        position: absolute;
+        pointer-events: none;
+      }
+
+      /* Ascending Rocket Trail */
+      .firework-rocket-trail {
+        position: absolute;
+        width: 4px;
+        height: 14px;
+        background: #ffffff;
+        box-shadow: 0 0 8px #ffe600, 0 4px 6px #ff7675;
+        border-radius: 1px;
+        transform-origin: center bottom;
+        animation: rocketAscend 0.45s ease-out forwards;
+      }
+
+      @keyframes rocketAscend {
+        0% {
+          transform: translateY(140px) scaleY(1.6);
+          opacity: 0.9;
+        }
+        70% {
+          transform: translateY(20px) scaleY(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(0) scaleY(0.4);
+          opacity: 0;
+        }
+      }
+
+      /* Flash of Light at the Epicenter */
+      .firework-epicenter-flash {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        margin-left: -35px;
+        margin-top: -35px;
+        border-radius: 50%;
+        pointer-events: none;
+        animation: epicenterFlashBurst 0.4s ease-out forwards;
+      }
+
+      @keyframes epicenterFlashBurst {
+        0% { transform: scale(0.2); opacity: 1; }
+        60% { transform: scale(1.4); opacity: 0.8; }
+        100% { transform: scale(2); opacity: 0; }
+      }
+
+      /* Individual Pixel Spark Particles */
+      .firework-spark {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        background-color: var(--spark-color, #ffe600);
+        box-shadow: 0 0 5px var(--spark-color, #ffe600), 1px 1px 0 rgba(0, 0, 0, 0.4);
+        transform-origin: center;
+        image-rendering: pixelated;
+        animation: sparkScatter var(--duration, 1.4s) cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+      }
+
+      /* Star-shaped sparks (✦ / ★) */
+      .firework-spark.spark-star {
+        width: 10px;
+        height: 10px;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        font-family: var(--font-pixel-heading);
+        font-size: 9px;
+        line-height: 1;
+        color: var(--spark-color, #ffe600);
+        text-shadow: 0 0 6px var(--spark-color, #ffe600), 1px 1px 0 #000000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Cross Pixel Spark */
+      .firework-spark.spark-cross {
+        width: 6px;
+        height: 6px;
+        clip-path: polygon(33% 0%, 66% 0%, 66% 33%, 100% 33%, 100% 66%, 66% 66%, 66% 100%, 33% 100%, 33% 66%, 0% 66%, 0% 33%, 33% 33%);
+      }
+
+      @keyframes sparkScatter {
+        0% {
+          transform: translate(0, 0) scale(1.4);
+          opacity: 1;
+          filter: brightness(220%);
+        }
+        25% {
+          filter: brightness(140%);
+        }
+        60% {
+          opacity: 1;
+        }
+        80% {
+          opacity: 0.85;
+          transform: translate(calc(var(--target-x) * 0.9), calc(var(--target-y) * 0.9 + 8px)) scale(1);
+        }
+        100% {
+          transform: translate(var(--target-x), calc(var(--target-y) + 20px)) scale(0.2);
+          opacity: 0;
+        }
+      }
+
+      /* Twinkling Falling Stardust */
+      .firework-stardust {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background-color: #ffffff;
+        box-shadow: 0 0 4px #ffffff;
+        animation: stardustFall 1.6s ease-in forwards;
+      }
+
+      @keyframes stardustFall {
+        0% {
+          transform: translate(0, 0) scale(1);
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+          transform: translate(calc(var(--dust-x) * 0.6), calc(var(--dust-y) * 0.6 + 10px)) scale(1.2);
+        }
+        100% {
+          transform: translate(var(--dust-x), calc(var(--dust-y) + 24px)) scale(0);
+          opacity: 0;
+        }
+      }
+
+      /* Solid High-Contrast Readable Header Plate */
+      .header-title-plate {
+        position: relative;
+        z-index: 10;
+        background-color: var(--c-panel-body);
+        border: 4px solid var(--c-dark);
+        box-shadow: 4px 4px 0 var(--c-dark-shadow);
+        padding: 12px 20px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        width: 100%;
+        max-width: 820px;
+      }
+
+      .brand-lockup {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      /* ANIMATED HOPPING MASCOT RABBIT (SIR FLUFF) */
+      .mascot-container {
+        width: 56px;
+        height: 56px;
+        flex-shrink: 0;
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+      }
+
+      .mascot-svg {
+        overflow: visible;
+      }
+
+      /* Rabbit Hopping Cycle: Crouch -> Leap -> Hang -> Soft Bounce Landing */
+      .mascot-hopper {
+        transform-origin: 14px 26px;
+        animation: mascotHop 3.2s infinite ease-in-out;
+      }
+
+      @keyframes mascotHop {
+        0%, 100% {
+          transform: translateY(0) scale(1, 1);
+        }
+        12% {
+          transform: translateY(1px) scale(1.08, 0.92); /* Crouch */
+        }
+        24% {
+          transform: translateY(-13px) scale(0.92, 1.1); /* Leap up */
+        }
+        36% {
+          transform: translateY(-15px) scale(1, 1); /* Apex in air */
+        }
+        48% {
+          transform: translateY(2px) scale(1.1, 0.9); /* Squishy impact landing */
+        }
+        58% {
+          transform: translateY(-2px) scale(0.98, 1.02); /* Secondary bounce */
+        }
+        68%, 90% {
+          transform: translateY(0) scale(1, 1); /* Sits calmly & breaths */
+        }
+      }
+
+      /* Left Ear Wiggle */
+      .mascot-left-ear {
+        transform-origin: 8px 11px;
+        animation: leftEarWiggle 4.2s infinite ease-in-out;
+      }
+
+      @keyframes leftEarWiggle {
+        0%, 75%, 100% { transform: rotate(0deg); }
+        80% { transform: rotate(-12deg); }
+        85% { transform: rotate(8deg); }
+        90% { transform: rotate(-8deg); }
+        95% { transform: rotate(4deg); }
+      }
+
+      /* Right Ear Wiggle (Staggered interval) */
+      .mascot-right-ear {
+        transform-origin: 18px 11px;
+        animation: rightEarWiggle 5.5s infinite ease-in-out;
+        animation-delay: 1.2s;
+      }
+
+      @keyframes rightEarWiggle {
+        0%, 78%, 100% { transform: rotate(0deg); }
+        82% { transform: rotate(14deg); }
+        88% { transform: rotate(-10deg); }
+        92% { transform: rotate(8deg); }
+        96% { transform: rotate(-4deg); }
+      }
+
+      /* Eye Blinking */
+      .mascot-eyes {
+        transform-origin: 13px 14px;
+        animation: mascotBlink 3.8s infinite;
+      }
+
+      @keyframes mascotBlink {
+        0%, 92%, 96%, 100% { transform: scaleY(1); }
+        94% { transform: scaleY(0.08); }
+      }
+
+      /* Nose Twitch */
+      .mascot-snout {
+        animation: noseTwitch 2.6s infinite ease-in-out;
+      }
+
+      @keyframes noseTwitch {
+        0%, 85%, 100% { transform: translateY(0); }
+        90% { transform: translateY(-1px) scaleX(1.15); }
+        95% { transform: translateY(0); }
+      }
+
+      .brand-text-col {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .app-main-title {
+        font-family: var(--font-pixel-heading);
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--c-dark);
+        letter-spacing: 0.5px;
+        text-shadow: 2px 2px 0 var(--c-mint-green);
+      }
+
+      .app-sub-title {
+        font-size: 21px;
+        color: #5c556f;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* Sound Toggle Button */
+      .sfx-toggle-btn {
+        background-color: #ffffff;
+        color: var(--c-dark);
+        font-family: var(--font-pixel-heading);
+        font-size: 11px;
+        border: 3px solid var(--c-dark);
+        box-shadow: 3px 3px 0 var(--c-dark-shadow);
+        padding: 8px 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: transform 0.1s ease, background-color 0.2s;
+        white-space: nowrap;
+      }
+
+      .sfx-toggle-btn:hover {
+        background-color: #fff8e1;
+      }
+
+      .sfx-toggle-btn:active {
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0 var(--c-dark-shadow);
+      }
+
+      .sfx-toggle-btn.active {
+        background-color: var(--c-mint-green);
+      }
+
+      /* ============================================================
+         WINDOW 1: NEW QUEST INPUT FORM
+         ============================================================ */
+      .add-task-form {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .input-main-row {
+        position: relative;
+        display: flex;
+        gap: 10px;
+      }
+
+      .pixel-input-text {
+        flex: 1;
+        font-family: var(--font-pixel-body);
+        font-size: 23px;
+        color: var(--c-dark);
+        background-color: #ffffff;
+        border: 3px solid var(--c-dark);
+        box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.08);
+        padding: 8px 14px;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+
+      .pixel-input-text:focus {
+        border-color: #554877;
+        box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.12), 0 0 0 2px var(--c-lavender);
+      }
+
+      .pixel-input-text::placeholder {
+        color: #9f96b2;
+      }
+
+      /* Gentle Pixel Shake on Error */
+      .pixel-shake {
+        animation: pixelShakeKeyframes 0.4s ease-in-out;
+        border-color: var(--p-high) !important;
+      }
+
+      @keyframes pixelShakeKeyframes {
+        0%, 100% { transform: translateX(0); }
+        20%, 60% { transform: translateX(-6px); }
+        40%, 80% { transform: translateX(6px); }
+      }
+
+      .form-meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .meta-controls-group {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .control-inline-label {
+        font-family: var(--font-pixel-heading);
+        font-size: 10px;
+        color: var(--c-dark);
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* Priority Selector */
+      .priority-button-group {
+        display: inline-flex;
+        border: 2px solid var(--c-dark);
+        background: #ffffff;
+      }
+
+      .p-choice-btn {
+        background: transparent;
+        border: none;
+        border-right: 2px solid var(--c-dark);
+        padding: 5px 10px;
+        font-family: var(--font-pixel-heading);
+        font-size: 9px;
+        color: var(--c-dark);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: background-color 0.15s;
+        line-height: 1;
+      }
+
+      .p-choice-btn:last-child {
+        border-right: none;
+      }
+
+      .p-dot {
+        width: 8px;
+        height: 8px;
+        border: 1px solid var(--c-dark);
+        display: inline-block;
+      }
+
+      .p-dot-low { background-color: var(--p-low); }
+      .p-dot-med { background-color: var(--p-med); }
+      .p-dot-high { background-color: var(--p-high); }
+
+      .p-choice-btn.selected {
+        background-color: var(--c-dark);
+        color: #ffffff;
+      }
+
+      .p-choice-btn.selected .p-dot {
+        border-color: #ffffff;
+      }
+
+      /* Due Date Picker */
+      .date-input-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .pixel-input-date {
+        font-family: var(--font-pixel-body);
+        font-size: 20px;
+        color: var(--c-dark);
+        background: #ffffff;
+        border: 2px solid var(--c-dark);
+        padding: 3px 8px;
+        outline: none;
+        cursor: pointer;
+      }
+
+      /* Add Quest Button */
+      .pixel-btn-primary {
+        background-color: var(--c-mint-green);
+        color: var(--c-dark);
+        font-family: var(--font-pixel-heading);
+        font-size: 11px;
+        font-weight: 700;
+        border: 3px solid var(--c-dark);
+        box-shadow: 3px 3px 0 var(--c-dark-shadow);
+        padding: 10px 16px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s;
+        white-space: nowrap;
+      }
+
+      .pixel-btn-primary:hover {
+        background-color: var(--c-mint-green-dark);
+      }
+
+      .pixel-btn-primary:active {
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0 var(--c-dark-shadow);
+      }
+
+      /* Category Selector in New Quest Form */
+      .category-select-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin-top: 4px;
+      }
+
+      .category-button-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .cat-choice-btn {
+        font-family: var(--font-pixel-heading);
+        font-size: 9px;
+        color: var(--c-dark);
+        background-color: #ffffff;
+        border: 2px solid var(--c-dark);
+        box-shadow: 2px 2px 0 var(--c-dark-shadow);
+        padding: 5px 9px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: transform 0.1s, background-color 0.15s;
+        line-height: 1.2;
+      }
+
+      .cat-choice-btn:hover {
+        background-color: #f7f3ff;
+      }
+
+      .cat-choice-btn:active {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 var(--c-dark-shadow);
+      }
+
+      .cat-choice-btn.selected {
+        background-color: var(--c-dark);
+        color: #ffffff;
+        box-shadow: inset 1px 1px 0 #000000;
+        transform: translate(1px, 1px);
+      }
+
+      /* Quest Notes Row & Input */
+      .notes-input-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .pixel-input-notes {
+        flex: 1;
+        font-family: var(--font-pixel-body);
+        font-size: 21px;
+        color: var(--c-dark);
+        background-color: #ffffff;
+        border: 2px solid var(--c-dark);
+        padding: 5px 10px;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      .pixel-input-notes:focus {
+        border-color: #554877;
+        box-shadow: 0 0 0 2px var(--c-lavender);
+      }
+
+      .pixel-input-notes::placeholder {
+        color: #9f96b2;
+      }
+
+      /* Friendly Error Banner */
+      .input-feedback-msg {
+        display: none;
+        font-family: var(--font-pixel-body);
+        font-size: 21px;
+        color: var(--p-high);
+        background-color: var(--p-high-bg);
+        border: 2px dashed var(--p-high);
+        padding: 6px 12px;
+      }
+
+      .input-feedback-msg.visible {
+        display: block;
+      }
+
+      /* ============================================================
+         WINDOW 2: HERO STATUS & PROGRESS BAR
+         ============================================================ */
+      .progress-card-content {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .progress-metrics-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .hero-rank-display {
+        font-family: var(--font-pixel-heading);
+        font-size: 11px;
+        color: var(--c-dark);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .quest-counts-display {
+        font-family: var(--font-pixel-heading);
+        font-size: 10px;
+        color: #5d5375;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Chunky 8-Bit Progress Bar */
+      .pixel-progress-track {
+        height: 26px;
+        background-color: #ede8dc;
+        border: 3px solid var(--c-dark);
+        box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .pixel-progress-fill {
+        height: 100%;
+        background: repeating-linear-gradient(
+          -45deg,
+          #68c04e,
+          #68c04e 10px,
+          #58af3f 10px,
+          #58af3f 20px
+        );
+        width: 0%;
+        transition: width 0.4s ease-out;
+        border-right: 2px solid var(--c-dark);
+      }
+
+      .progress-percentage-label {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-pixel-heading);
+        font-size: 10px;
+        color: var(--c-dark);
+        font-weight: bold;
+        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8);
+        pointer-events: none;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Celebratory Banner on 100% Completion */
+      .celebration-banner {
+        display: none;
+        background-color: var(--c-pale-yellow);
+        border: 3px solid var(--c-dark);
+        box-shadow: 3px 3px 0 var(--c-dark-shadow);
+        padding: 12px 14px;
+        text-align: center;
+        animation: bannerPulse 2.5s infinite ease-in-out;
+      }
+
+      .celebration-banner.active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      @keyframes bannerPulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.015); }
+      }
+
+      .celebration-text {
+        font-family: var(--font-pixel-heading);
+        font-size: 11px;
+        color: var(--c-dark);
+        line-height: 1.5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .firework-replay-btn {
+        background-color: #ffffff;
+        color: var(--c-dark);
+        font-family: var(--font-pixel-heading);
+        font-size: 10px;
+        font-weight: bold;
+        border: 2px solid var(--c-dark);
+        box-shadow: 2px 2px 0 var(--c-dark-shadow);
+        padding: 6px 14px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: transform 0.1s ease, background-color 0.2s;
+      }
+
+      .firework-replay-btn:hover {
+        background-color: var(--c-mint-green);
+      }
+
+      .firework-replay-btn:active {
+        transform: translate(2px, 2px);
+        box-shadow: 0 0 0 var(--c-dark-shadow);
+      }
+
+      /* ============================================================
+         WINDOW 3: QUEST LOG & FILTER TOOLBAR
+         ============================================================ */
+      .log-toolbar {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-bottom: 14px;
+        border-bottom: 3px dashed #dcd5c4;
+        margin-bottom: 16px;
+      }
+
+      .toolbar-top-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .filter-tabs-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .filter-tab-btn {
+        font-family: var(--font-pixel-heading);
+        font-size: 10px;
+        color: var(--c-dark);
+        background-color: #ffffff;
+        border: 2px solid var(--c-dark);
+        box-shadow: 2px 2px 0 var(--c-dark-shadow);
+        padding: 7px 12px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: transform 0.1s, background-color 0.15s;
+        line-height: 1;
+      }
+
+      .filter-tab-btn:hover {
+        background-color: #f7f3ff;
+      }
+
+      .filter-tab-btn:active {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 var(--c-dark-shadow);
+      }
+
+      .filter-tab-btn.active {
+        background-color: var(--c-lavender);
+        box-shadow: inset 1px 1px 0 var(--c-dark-shadow);
+        transform: translate(1px, 1px);
+        font-weight: bold;
+      }
+
+      /* Category Toolbar Filter Row */
+      .category-toolbar-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        padding-top: 4px;
+        border-top: 1px dashed #e2dcce;
+      }
+
+      .category-filter-label {
+        font-family: var(--font-pixel-heading);
+        font-size: 9px;
+        color: var(--c-dark);
+        letter-spacing: 0.5px;
+      }
+
+      .category-filter-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .cat-filter-tab {
+        font-family: var(--font-pixel-heading);
+        font-size: 8.5px;
+        color: var(--c-dark);
+        background-color: #ffffff;
+        border: 2px solid var(--c-dark);
+        box-shadow: 2px 2px 0 var(--c-dark-shadow);
+        padding: 5px 9px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: transform 0.1s, background-color 0.15s;
+        line-height: 1.2;
+      }
+
+      .cat-filter-tab:hover {
+        background-color: #f7f3ff;
+      }
+
+      .cat-filter-tab:active {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 var(--c-dark-shadow);
+      }
+
+      .cat-filter-tab.active {
+        box-shadow: inset 1px 1px 0 var(--c-dark-shadow);
+        transform: translate(1px, 1px);
+        font-weight: bold;
+      }
+
+      .cat-filter-tab[data-cat="all"].active { background-color: var(--c-lavender); }
+      .cat-filter-tab[data-cat="work"].active { background-color: #bae6fd; }
+      .cat-filter-tab[data-cat="personal"].active { background-color: #e9d5ff; }
+      .cat-filter-tab[data-cat="health"].active { background-color: #a7f3d0; }
+      .cat-filter-tab[data-cat="study"].active { background-color: #fde68a; }
+      .cat-filter-tab[data-cat="adventure"].active { background-color: #fecdd3; }
+
+      /* Task Card Category Badges */
+      .quest-category-badge {
+        font-family: var(--font-pixel-heading);
+        font-size: 8px;
+        border: 2px solid var(--c-dark);
+        padding: 2px 6px;
+        line-height: 1.2;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        box-shadow: 1px 1px 0 var(--c-dark-shadow);
+        white-space: nowrap;
+      }
+
+      .quest-category-badge.cat-work { background-color: #e0f2fe; color: #0369a1; }
+      .quest-category-badge.cat-personal { background-color: #f3e8ff; color: #6b21a8; }
+      .quest-category-badge.cat-health { background-color: #d1fae5; color: #047857; }
+      .quest-category-badge.cat-study { background-color: #fef3c7; color: #b45309; }
+      .quest-category-badge.cat-adventure { background-color: #ffe4e6; color: #be123c; }
+
+      .inline-edit-cat-select {
+        font-family: var(--font-pixel-heading);
+        font-size: 8px;
+        color: var(--c-dark);
+        background: #ffffff;
+        border: 2px solid var(--c-dark);
+        padding: 4px 6px;
+        cursor: pointer;
+        outline: none;
+      }
+
+      .toolbar-actions-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .reset-completed-btn {
+        font-family: var(--font-pixel-heading);
+        font-size: 9px;
+        color: var(--c-dark);
+        background-color: #f0fdf4;
+        border: 2px solid var(--c-dark);
+        box-shadow: 2px 2px 0 var(--c-dark-shadow);
+        padding: 7px 12px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: background-color 0.15s, transform 0.1s;
+      }
+
+      .reset-completed-btn:hover:not(:disabled) {
+        background-color: var(--c-mint);
+      }
+
+      .reset-completed-btn:active:not(:disabled) {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 var(--c-dark-shadow);
+      }
+
+      .reset-completed-btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .clear-completed-btn {
+        font-family: var(--font-pixel-heading);
+        font-size: 9px;
+        color: var(--c-dark);
+        background-color: #ffffff;
+        border: 2px solid var(--c-dark);
+        box-shadow: 2px 2px 0 var(--c-dark-shadow);
+        padding: 7px 12px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: background-color 0.15s, transform 0.1s;
+      }
+
+      .clear-completed-btn:hover:not(:disabled) {
+        background-color: var(--p-high-bg);
+      }
+
+      .clear-completed-btn:active:not(:disabled) {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 var(--c-dark-shadow);
+      }
+
+      .clear-completed-btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .section-reset-btn {
+        font-family: var(--font-pixel-heading);
+        font-size: 8px;
+        color: var(--c-dark);
+        background-color: #f0fdf4;
+        border: 2px solid var(--c-dark);
+        box-shadow: 2px 2px 0 var(--c-dark-shadow);
+        padding: 4px 8px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: background-color 0.15s, transform 0.1s;
+        line-height: 1.2;
+      }
+
+      .section-reset-btn:hover:not(:disabled) {
+        background-color: var(--c-mint);
+      }
+
+      .section-reset-btn:active:not(:disabled) {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 var(--c-dark-shadow);
+      }
+
+      .section-reset-btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      /* Sections inside Quest Log */
+      .quest-sections-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .quest-sub-header-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        padding-bottom: 4px;
+        border-bottom: 2px solid var(--c-dark);
+      }
+
+      .quest-sub-header-container .quest-sub-header {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .quest-sub-header {
+        font-family: var(--font-pixel-heading);
+        font-size: 11px;
+        color: var(--c-dark);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+        padding-bottom: 4px;
+        border-bottom: 2px solid var(--c-dark);
+      }
+
+      .quest-sub-count {
+        font-size: 9px;
+        color: #625973;
+        font-weight: normal;
+      }
+
+      .quest-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      /* Task Card Item */
+      .quest-item {
+        background-color: #ffffff;
+        border: 3px solid var(--c-dark);
+        box-shadow: 3px 3px 0 var(--c-dark-shadow);
+        padding: 10px 14px;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        transition: transform 0.15s, opacity 0.2s, background-color 0.2s;
+        position: relative;
+      }
+
+      .quest-item:hover {
+        background-color: #fffefb;
+      }
+
+      /* Poof Animation on Delete */
+      .quest-item.poof-animation {
+        animation: pixelPoof 0.35s forwards cubic-bezier(0.1, 0.9, 0.2, 1);
+        pointer-events: none;
+      }
+
+      @keyframes pixelPoof {
+        0% { transform: scale(1); opacity: 1; filter: none; }
+        50% { transform: scale(1.08); opacity: 0.8; filter: contrast(200%); }
+        100% { transform: scale(0.6) translateY(-10px); opacity: 0; }
+      }
+
+      /* Custom 8-Bit Checkbox */
+      .pixel-checkbox-btn {
+        width: 26px;
+        height: 26px;
+        flex-shrink: 0;
+        background-color: #ffffff;
+        border: 3px solid var(--c-dark);
+        box-shadow: 1px 1px 0 var(--c-dark-shadow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        padding: 0;
+        margin-top: 2px;
+        transition: background-color 0.1s, transform 0.1s;
+      }
+
+      .pixel-checkbox-btn:hover {
+        background-color: var(--c-pale-yellow);
+      }
+
+      .pixel-checkbox-btn:active {
+        transform: translate(1px, 1px);
+      }
+
+      .quest-item.is-completed .pixel-checkbox-btn {
+        background-color: var(--c-mint-green);
+      }
+
+      .checkbox-glyph {
+        display: none;
+        font-family: var(--font-pixel-heading);
+        font-size: 13px;
+        font-weight: bold;
+        color: var(--c-dark);
+        line-height: 1;
+      }
+
+      .quest-item.is-completed .checkbox-glyph {
+        display: block;
+      }
+
+      /* Quest Content Area */
+      .quest-content-area {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .quest-title-display {
+        font-family: var(--font-pixel-body);
+        font-size: 24px;
+        line-height: 1.25;
+        color: var(--c-dark);
+        word-break: break-word;
+        transition: color 0.2s;
+      }
+
+      .quest-item.is-completed .quest-title-display {
+        text-decoration: line-through 2px var(--c-dark);
+        color: #8c849e;
+      }
+
+      /* Inline Edit Input Form */
+      .inline-edit-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        width: 100%;
+      }
+
+      .inline-edit-input {
+        flex: 1;
+        font-family: var(--font-pixel-body);
+        font-size: 22px;
+        color: var(--c-dark);
+        background: #ffffff;
+        border: 2px solid var(--c-dark);
+        padding: 4px 8px;
+        outline: none;
+      }
+
+      .inline-btn {
+        font-family: var(--font-pixel-heading);
+        font-size: 9px;
+        border: 2px solid var(--c-dark);
+        box-shadow: 1px 1px 0 var(--c-dark-shadow);
+        padding: 6px 10px;
+        cursor: pointer;
+        line-height: 1;
+      }
+
+      .inline-btn-save {
+        background-color: var(--c-mint-green);
+        color: var(--c-dark);
+      }
+
+      .inline-btn-cancel {
+        background-color: var(--c-pale-yellow);
+        color: var(--c-dark);
+      }
+
+      /* Metadata Tag Line */
+      .quest-meta-line {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        font-size: 19px;
+        color: #635b75;
+      }
+
+      /* Interactive Priority Badge on Card (Cycles on Click) */
+      .card-priority-badge {
+        font-family: var(--font-pixel-heading);
+        font-size: 8px;
+        border: 2px solid var(--c-dark);
+        padding: 3px 6px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: transform 0.1s;
+        line-height: 1;
+        user-select: none;
+      }
+
+      .card-priority-badge:hover {
+        transform: translateY(-1px);
+      }
+
+      .card-priority-badge:active {
+        transform: translateY(1px);
+      }
+
+      .badge-low { background-color: var(--p-low-bg); color: var(--p-low); }
+      .badge-med { background-color: var(--p-med-bg); color: var(--p-med); }
+      .badge-high { background-color: var(--p-high-bg); color: var(--p-high); }
+
+      /* Due Date Tag */
+      .due-date-tag {
+        font-family: var(--font-pixel-heading);
+        font-size: 8px;
+        border: 2px solid var(--c-dark);
+        background-color: #ffffff;
+        color: var(--c-dark);
+        padding: 3px 6px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        line-height: 1;
+      }
+
+      .due-date-tag.is-overdue {
+        background-color: var(--p-high-bg);
+        border-color: var(--p-high);
+        color: var(--p-high);
+        font-weight: bold;
+        animation: overdueBlink 2s infinite ease-in-out;
+      }
+
+      @keyframes overdueBlink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+      }
+
+      /* Timestamps */
+      .meta-timestamp {
+        font-size: 18px;
+        color: #7d758f;
+      }
+
+      /* Interactive Notes Tag / Badge */
+      .card-notes-tag {
+        font-family: var(--font-pixel-heading);
+        font-size: 8px;
+        border: 2px solid var(--c-dark);
+        background-color: #fff9e6;
+        color: var(--c-dark);
+        padding: 3px 6px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: transform 0.1s, background-color 0.15s;
+        line-height: 1;
+        user-select: none;
+      }
+
+      .card-notes-tag:hover {
+        background-color: var(--c-pale-yellow);
+        transform: translateY(-1px);
+      }
+
+      .card-notes-tag:active {
+        transform: translateY(1px);
+      }
+
+      .card-notes-tag.is-active {
+        background-color: var(--c-pale-yellow-dark);
+        box-shadow: inset 1px 1px 0 var(--c-dark-shadow);
+      }
+
+      /* Quest Notes Card Drawer / Panel (Visible when expanded or hovered) */
+      .quest-notes-drawer {
+        margin-top: 8px;
+        background-color: #fbf9ef;
+        border: 2px dashed #b8af9b;
+        padding: 8px 12px;
+        position: relative;
+        transition: opacity 0.2s ease, max-height 0.25s ease, padding 0.2s ease, margin 0.2s ease;
+        display: none;
+      }
+
+      .quest-notes-header {
+        font-family: var(--font-pixel-heading);
+        font-size: 8px;
+        color: #6a617d;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        text-transform: uppercase;
+      }
+
+      .quest-notes-body {
+        font-family: var(--font-pixel-body);
+        font-size: 20px;
+        line-height: 1.3;
+        color: #4a435a;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      /* Hover or Expanded visibility rules */
+      .quest-item.has-notes.is-expanded .quest-notes-drawer {
+        display: block;
+        animation: notesSlideIn 0.2s ease-out;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .quest-item.has-notes:hover .quest-notes-drawer {
+          display: block;
+        }
+      }
+
+      @keyframes notesSlideIn {
+        from { opacity: 0; transform: translateY(-4px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Inline Edit Notes Input Area */
+      .inline-edit-notes-input {
+        width: 100%;
+        font-family: var(--font-pixel-body);
+        font-size: 20px;
+        color: var(--c-dark);
+        background: #ffffff;
+        border: 2px solid var(--c-dark);
+        padding: 4px 8px;
+        outline: none;
+        resize: vertical;
+        min-height: 54px;
+        margin-top: 6px;
+      }
+
+      /* Action Buttons on Task Card */
+      .quest-action-buttons {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+
+      .quest-action-btn {
+        font-family: var(--font-pixel-heading);
+        font-size: 9px;
+        border: 2px solid var(--c-dark);
+        box-shadow: 2px 2px 0 var(--c-dark-shadow);
+        padding: 6px 9px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        transition: transform 0.1s, background-color 0.15s;
+      }
+
+      .quest-action-btn:hover {
+        background-color: #f6f0ff;
+      }
+
+      .quest-action-btn:active {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 var(--c-dark-shadow);
+      }
+
+      .btn-edit {
+        background-color: #ffffff;
+        color: var(--c-dark);
+      }
+
+      .btn-delete {
+        background-color: #ffffff;
+        color: var(--p-high);
+      }
+
+      .btn-delete:hover {
+        background-color: var(--p-high-bg);
+      }
+
+      /* Friendly Empty States */
+      .quest-empty-state {
+        text-align: center;
+        padding: 36px 16px;
+        background-color: var(--c-panel-body-alt);
+        border: 3px dashed #d5cdbd;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .empty-state-art {
+        width: 52px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .empty-state-title {
+        font-family: var(--font-pixel-heading);
+        font-size: 11px;
+        color: var(--c-dark);
+      }
+
+      .empty-state-desc {
+        font-size: 21px;
+        color: #6a627a;
+        max-width: 440px;
+      }
+
+      /* ============================================================
+         WINDOW 4: ADVENTURER'S MANUAL & TIPS
+         ============================================================ */
+      .manual-tips-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 12px;
+        list-style: none;
+      }
+
+      .manual-tip-card {
+        background: #ffffff;
+        border: 2px solid var(--c-dark);
+        padding: 10px 12px;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .tip-icon {
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .tip-text {
+        font-size: 19px;
+        color: #554d66;
+        line-height: 1.25;
+      }
+
+      .tip-text strong {
+        color: var(--c-dark);
+        font-family: var(--font-pixel-heading);
+        font-size: 9px;
+        display: block;
+        margin-bottom: 2px;
+      }
+
+      /* Toast Notification */
+      .pixel-toast-container {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        pointer-events: none;
+      }
+
+      .pixel-toast {
+        background-color: var(--c-pale-yellow);
+        color: var(--c-dark);
+        border: 3px solid var(--c-dark);
+        box-shadow: 4px 4px 0 var(--c-dark-shadow);
+        font-family: var(--font-pixel-heading);
+        font-size: 10px;
+        padding: 10px 16px;
+        animation: toastIn 0.3s ease-out;
+        pointer-events: auto;
+      }
+
+      @keyframes toastIn {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+
+      /* ============================================================
+         RESPONSIVE & REDUCED MOTION DISCIPLINE
+         ============================================================ */
+      @media (max-width: 640px) {
+        body {
+          padding: 10px 8px 40px;
+        }
+
+        .scene-viewport {
+          min-height: 160px;
+          padding: 16px 10px 28px;
+        }
+
+        .header-title-plate {
+          padding: 10px 12px;
+          gap: 10px;
+        }
+
+        .app-main-title {
+          font-size: 16px;
+        }
+
+        .app-sub-title {
+          font-size: 18px;
+        }
+
+        .mascot-container {
+          width: 44px;
+          height: 44px;
+        }
+
+        .form-meta-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .meta-controls-group {
+          justify-content: space-between;
+        }
+
+        .pixel-btn-primary {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .log-toolbar {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .filter-tabs-group {
+          justify-content: center;
+        }
+
+        .toolbar-actions-group {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .reset-completed-btn,
+        .clear-completed-btn {
+          flex: 1 1 140px;
+          justify-content: center;
+        }
+
+        .category-toolbar-row,
+        .category-filter-tabs,
+        .category-select-row,
+        .category-button-group {
+          justify-content: center;
+        }
+
+        .time-controls-group {
+          flex-wrap: wrap;
+        }
+
+        .quest-item {
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .quest-action-buttons {
+          align-self: flex-end;
+        }
+
+        .bird-2, .cloud-3 {
+          display: none;
+        }
+      }
+
+      /* Note: this app's animations are small, slow, decorative sprites
+         (a hopping rabbit, drifting clouds, twinkling stars) rather than
+         large parallax or flashing motion, so they are intentionally kept
+         running even when the system requests reduced motion — turning
+         them off entirely would hide features the app is meant to show. */
+    </style>
+  </head>
+  <body>
+    <div class="app-wrapper">
+
+      <!-- ============================================================
+           HEADER WINDOW: LIVING PIXEL SCENE + MASCOT + TITLE
+           ============================================================ -->
+      <section class="pixel-window theme-sky header-living-window" aria-label="Game World Header">
+        <!-- Title Bar with Time Controls -->
+        <header class="window-titlebar">
+          <div class="titlebar-left">
+            <span class="titlebar-title">PIXELQUEST OS · WORLD 1-1</span>
+          </div>
+
+          <!-- Time of Day Mode Switcher -->
+          <div class="time-controls-group" role="group" aria-label="Sky Time Controls">
+            <button type="button" class="time-toggle-btn" data-time="day" title="Set Daylight Sky">☀️ DAY</button>
+            <button type="button" class="time-toggle-btn" data-time="sunset" title="Set Sunset Twilight">🌅 DUSK</button>
+            <button type="button" class="time-toggle-btn" data-time="night" title="Set Starry Night">🌙 NIGHT</button>
+            <button type="button" class="time-toggle-btn active" data-time="auto" id="autoTimeBtn" title="Sync with Real Local Time">⏰ <span id="timeBadgeText">AUTO</span></button>
+          </div>
+
+          <div class="window-buttons" aria-hidden="true">
+            <button class="win-btn" tabindex="-1">_</button>
+            <button class="win-btn" tabindex="-1">□</button>
+            <button class="win-btn" tabindex="-1">×</button>
+          </div>
+        </header>
+
+        <!-- Living Animated Ambient Scene Behind Title -->
+        <div class="scene-viewport" id="sceneViewport">
+          <!-- Sky Gradient Layer -->
+          <div class="sky-layer theme-day" id="skyLayer" aria-hidden="true"></div>
+
+          <!-- Sky Fireworks Particle Layer (Triggers at 100% Completion) -->
+          <div class="sky-fireworks-container" id="skyFireworksContainer" aria-hidden="true"></div>
+
+          <!-- Celestial Sun & Moon Arc Trajectory -->
+          <div class="celestial-system" aria-hidden="true">
+            <!-- Radiant Golden Sun -->
+            <div class="celestial-sun-track" id="sunTrack">
+              <div class="pixel-sun"></div>
+            </div>
+            <!-- Luminous Crescent Moon -->
+            <div class="celestial-moon-track" id="moonTrack">
+              <svg class="pixel-moon" width="34" height="34" viewBox="0 0 20 20" fill="none">
+                <path d="M12 2 A8 8 0 1 0 18 14 A9 9 0 0 1 12 2 Z" fill="#f5f6fa" stroke="#3a3350" stroke-width="1.5" />
+                <circle cx="8" cy="9" r="1.5" fill="#dcdde1" />
+                <circle cx="11" cy="14" r="1" fill="#dcdde1" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Pixel Starfield for Twilight & Night -->
+          <div class="pixel-star-field" aria-hidden="true">
+            <div class="star-sprite star-1"></div>
+            <div class="star-sprite star-2"></div>
+            <div class="star-sprite star-3"></div>
+            <div class="star-sprite star-4"></div>
+            <div class="star-sprite star-5"></div>
+            <div class="star-sprite star-6"></div>
+          </div>
+
+          <!-- Drifting Fluffy Pixel Clouds -->
+          <svg class="cloud-sprite cloud-1" width="64" height="28" viewBox="0 0 32 14" fill="none" aria-hidden="true">
+            <rect x="6" y="2" width="16" height="10" fill="#ffffff" />
+            <rect x="12" y="0" width="14" height="12" fill="#ffffff" />
+            <rect x="2" y="5" width="28" height="7" fill="#ffffff" />
+            <rect x="4" y="12" width="24" height="2" fill="#e0e7ff" />
+          </svg>
+
+          <svg class="cloud-sprite cloud-2" width="52" height="22" viewBox="0 0 28 12" fill="none" aria-hidden="true">
+            <rect x="6" y="2" width="14" height="8" fill="#ffffff" opacity="0.9" />
+            <rect x="2" y="4" width="24" height="6" fill="#ffffff" opacity="0.9" />
+            <rect x="4" y="10" width="20" height="2" fill="#e0e7ff" opacity="0.9" />
+          </svg>
+
+          <svg class="cloud-sprite cloud-3" width="70" height="26" viewBox="0 0 36 14" fill="none" aria-hidden="true">
+            <rect x="8" y="2" width="18" height="10" fill="#ffffff" opacity="0.8" />
+            <rect x="4" y="5" width="28" height="7" fill="#ffffff" opacity="0.8" />
+            <rect x="6" y="12" width="24" height="2" fill="#e0e7ff" opacity="0.8" />
+          </svg>
+
+          <!-- Flying Flapping Birds -->
+          <svg class="bird-sprite bird-1" width="24" height="14" viewBox="0 0 12 7" fill="none" aria-hidden="true">
+            <rect class="wing-left" x="0" y="1" width="4" height="2" fill="#3a3350" />
+            <rect x="4" y="2" width="4" height="3" fill="#3a3350" />
+            <rect class="wing-right" x="8" y="1" width="4" height="2" fill="#3a3350" />
+          </svg>
+
+          <svg class="bird-sprite bird-2" width="20" height="12" viewBox="0 0 12 7" fill="none" aria-hidden="true">
+            <rect class="wing-left" x="0" y="1" width="4" height="2" fill="#3a3350" />
+            <rect x="4" y="2" width="4" height="3" fill="#3a3350" />
+            <rect class="wing-right" x="8" y="1" width="4" height="2" fill="#3a3350" />
+          </svg>
+
+          <!-- Evergreen Pine Tree (Left) -->
+          <svg class="scene-tree-pine" width="36" height="58" viewBox="0 0 20 32" fill="none" aria-hidden="true">
+            <rect x="8" y="24" width="4" height="8" fill="#593a20" stroke="#3a3350" stroke-width="1" />
+            <!-- Needle layers -->
+            <polygon points="10,0 2,12 18,12" fill="#2d6a26" stroke="#3a3350" stroke-width="1" />
+            <polygon points="10,8 1,20 19,20" fill="#22541c" stroke="#3a3350" stroke-width="1" />
+            <polygon points="10,16 0,26 20,26" fill="#1b4216" stroke="#3a3350" stroke-width="1" />
+          </svg>
+
+          <!-- Leafy Oak / Apple Tree with Branch for Owl (Right) -->
+          <svg class="scene-tree-oak" width="56" height="74" viewBox="0 0 32 42" fill="none" aria-hidden="true">
+            <rect x="13" y="20" width="6" height="22" fill="#6d4827" stroke="#3a3350" stroke-width="1" />
+            <!-- Branch where owl rests (tucked under the canopy so it doesn't poke out bare) -->
+            <rect x="19" y="18" width="7" height="2" fill="#6d4827" stroke="#3a3350" stroke-width="1" />
+            <!-- Foliage Crown -->
+            <circle cx="16" cy="12" r="12" fill="#469931" stroke="#3a3350" stroke-width="1" />
+            <circle cx="9" cy="14" r="8" fill="#388025" />
+            <circle cx="23" cy="14" r="8" fill="#58b53e" />
+            <!-- Apples -->
+            <circle cx="12" cy="10" r="1.5" fill="#e74c3c" />
+            <circle cx="21" cy="9" r="1.5" fill="#e74c3c" />
+            <circle cx="16" cy="17" r="1.5" fill="#e74c3c" />
+          </svg>
+
+          <!-- Second Small Pine (Right cluster) -->
+          <svg class="scene-tree-pine-r2" width="26" height="42" viewBox="0 0 20 32" fill="none" aria-hidden="true">
+            <rect x="8" y="24" width="4" height="8" fill="#593a20" stroke="#3a3350" stroke-width="1" />
+            <polygon points="10,0 2,12 18,12" fill="#2d6a26" stroke="#3a3350" stroke-width="1" />
+            <polygon points="10,8 1,20 19,20" fill="#22541c" stroke="#3a3350" stroke-width="1" />
+            <polygon points="10,16 0,26 20,26" fill="#1b4216" stroke="#3a3350" stroke-width="1" />
+          </svg>
+
+          <!-- Third Small Pine (Right cluster) -->
+          <svg class="scene-tree-pine-r3" width="20" height="34" viewBox="0 0 20 32" fill="none" aria-hidden="true">
+            <rect x="8" y="24" width="4" height="8" fill="#593a20" stroke="#3a3350" stroke-width="1" />
+            <polygon points="10,0 2,12 18,12" fill="#388025" stroke="#3a3350" stroke-width="1" />
+            <polygon points="10,8 1,20 19,20" fill="#2d6a26" stroke="#3a3350" stroke-width="1" />
+            <polygon points="10,16 0,26 20,26" fill="#22541c" stroke="#3a3350" stroke-width="1" />
+          </svg>
+
+          <!-- Night Owl on Tree Branch -->
+          <div class="tree-owl" title="Wise Owl Guardian" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 14 14" fill="none">
+              <!-- Body -->
+              <rect x="3" y="3" width="8" height="9" rx="2" fill="#8e583c" stroke="#3a3350" stroke-width="1" />
+              <!-- Belly -->
+              <rect x="5" y="7" width="4" height="4" fill="#f8e1cb" />
+              <!-- Ears / Horn tufts -->
+              <polygon points="3,3 3,0 5,3" fill="#6c3f27" />
+              <polygon points="11,3 11,0 9,3" fill="#6c3f27" />
+              <!-- Beak -->
+              <polygon points="7,6 6,7 8,7" fill="#f39c12" />
+              <!-- Eyes: Day Sleepy vs Night Awake -->
+              <g class="owl-eyes-day">
+                <path d="M4 5 Q5 4 6 5" stroke="#3a3350" stroke-width="1" fill="none" />
+                <path d="M8 5 Q9 4 10 5" stroke="#3a3350" stroke-width="1" fill="none" />
+              </g>
+              <g class="owl-eyes-night">
+                <circle cx="5" cy="5" r="2.2" fill="#f1c40f" stroke="#3a3350" stroke-width="0.8" />
+                <circle cx="5" cy="5" r="1" fill="#3a3350" />
+                <circle cx="9" cy="5" r="2.2" fill="#f1c40f" stroke="#3a3350" stroke-width="0.8" />
+                <circle cx="9" cy="5" r="1" fill="#3a3350" />
+              </g>
+            </svg>
+          </div>
+
+          <!-- Day & Night Ground Animals: Fawn -->
+          <div class="grass-critter-fawn" aria-hidden="true">
+            <!-- Day Awake Fawn Grazing -->
+            <svg class="fawn-awake" width="34" height="34" viewBox="0 0 20 20" fill="none">
+              <!-- Body -->
+              <rect x="4" y="6" width="11" height="7" rx="2" fill="#d38243" stroke="#3a3350" stroke-width="1" />
+              <!-- Spots -->
+              <circle cx="7" cy="8" r="0.8" fill="#ffffff" />
+              <circle cx="11" cy="9" r="0.8" fill="#ffffff" />
+              <!-- Head -->
+              <rect x="13" y="4" width="6" height="5" rx="1" fill="#d38243" stroke="#3a3350" stroke-width="1" />
+              <!-- Ears -->
+              <polygon points="15,4 16,1 17,4" fill="#d38243" />
+              <!-- Eye -->
+              <circle cx="17" cy="6" r="0.7" fill="#3a3350" />
+              <!-- Legs -->
+              <rect x="5" y="13" width="2" height="6" fill="#b06328" />
+              <rect x="12" y="13" width="2" height="6" fill="#b06328" />
+              <!-- Tail -->
+              <rect x="2" y="6" width="2" height="2" fill="#ffffff" />
+            </svg>
+            <!-- Night Sleeping Fawn Curled Up -->
+            <div class="fawn-asleep">
+              <div class="zzz-container">Z z z</div>
+              <svg width="32" height="22" viewBox="0 0 20 14" fill="none">
+                <!-- Curled Body -->
+                <ellipse cx="10" cy="8" rx="8" ry="5" fill="#d38243" stroke="#3a3350" stroke-width="1" />
+                <circle cx="8" cy="7" r="0.8" fill="#ffffff" />
+                <circle cx="12" cy="8" r="0.8" fill="#ffffff" />
+                <!-- Sleeping Face -->
+                <circle cx="14" cy="7" r="3.5" fill="#d38243" />
+                <path d="M13 7 Q14 8 15 7" stroke="#3a3350" stroke-width="0.8" fill="none" />
+                <!-- Tucked Legs -->
+                <rect x="6" y="11" width="6" height="2" rx="1" fill="#b06328" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Day & Night Ground Animals: Little Bunny -->
+          <div class="grass-critter-bunny" aria-hidden="true">
+            <!-- Day Awake Bunny -->
+            <svg class="bunny-awake" width="24" height="24" viewBox="0 0 16 16" fill="none">
+              <!-- Ears -->
+              <rect x="5" y="1" width="2" height="5" fill="#f5f6fa" stroke="#3a3350" stroke-width="0.8" />
+              <rect x="8" y="1" width="2" height="5" fill="#f5f6fa" stroke="#3a3350" stroke-width="0.8" />
+              <!-- Body -->
+              <ellipse cx="8" cy="10" rx="5" ry="4" fill="#f5f6fa" stroke="#3a3350" stroke-width="1" />
+              <circle cx="11" cy="8" r="0.8" fill="#ff7675" />
+              <circle cx="3" cy="10" r="1.5" fill="#ffffff" />
+            </svg>
+            <!-- Night Sleeping Bunny -->
+            <div class="bunny-asleep">
+              <div class="zzz-container">z z</div>
+              <svg width="24" height="18" viewBox="0 0 16 12" fill="none">
+                <ellipse cx="8" cy="7" rx="5" ry="3.5" fill="#f5f6fa" stroke="#3a3350" stroke-width="1" />
+                <path d="M10 6 Q11 7 12 6" stroke="#3a3350" stroke-width="0.8" fill="none" />
+                <circle cx="3" cy="7" r="1.2" fill="#ffffff" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Colorful Blooming Flowers on the Grass Line -->
+          <!-- 1. Pink Peony -->
+          <svg class="scene-flower flower-1" width="16" height="24" viewBox="0 0 9 14" fill="none" aria-hidden="true">
+            <rect x="4" y="5" width="1" height="9" fill="#2d6a26" />
+            <rect x="2" y="8" width="2" height="1" fill="#4fa542" />
+            <circle cx="4.5" cy="4" r="3.5" fill="#ff70a6" stroke="#3a3350" stroke-width="0.8" />
+            <circle cx="4.5" cy="4" r="1.5" fill="#ffeaa7" />
+          </svg>
+          <!-- 2. Golden Sunflower -->
+          <svg class="scene-flower flower-2" width="18" height="26" viewBox="0 0 10 15" fill="none" aria-hidden="true">
+            <rect x="4.5" y="6" width="1" height="9" fill="#2d6a26" />
+            <rect x="6" y="9" width="2" height="1" fill="#4fa542" />
+            <circle cx="5" cy="4.5" r="4" fill="#f1c40f" stroke="#3a3350" stroke-width="0.8" />
+            <circle cx="5" cy="4.5" r="2" fill="#784212" />
+          </svg>
+          <!-- 3. Violet Bluebell -->
+          <svg class="scene-flower flower-3" width="16" height="22" viewBox="0 0 9 13" fill="none" aria-hidden="true">
+            <rect x="4" y="5" width="1" height="8" fill="#2d6a26" />
+            <rect x="2" y="7" width="2" height="1" fill="#4fa542" />
+            <polygon points="4.5,1 1,5 8,5" fill="#9b59b6" stroke="#3a3350" stroke-width="0.8" />
+            <circle cx="4.5" cy="4" r="1" fill="#ffffff" />
+          </svg>
+          <!-- 4. Crimson Rose -->
+          <svg class="scene-flower flower-4" width="16" height="24" viewBox="0 0 9 14" fill="none" aria-hidden="true">
+            <rect x="4" y="5" width="1" height="9" fill="#2d6a26" />
+            <rect x="5" y="8" width="2" height="1" fill="#4fa542" />
+            <circle cx="4.5" cy="4" r="3.5" fill="#e74c3c" stroke="#3a3350" stroke-width="0.8" />
+            <circle cx="4.5" cy="4" r="1.5" fill="#c0392b" />
+          </svg>
+
+          <!-- Animated Fluttering Butterfly Visiting Flowers -->
+          <div class="scene-butterfly" title="Flower Butterfly" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 12 12" fill="none">
+              <ellipse class="butterfly-wing" cx="3" cy="4" rx="3" ry="2.5" fill="#ff9ff3" stroke="#3a3350" stroke-width="0.8" />
+              <ellipse class="butterfly-wing" cx="9" cy="4" rx="3" ry="2.5" fill="#54a0ff" stroke="#3a3350" stroke-width="0.8" />
+              <ellipse class="butterfly-wing" cx="3.5" cy="8" rx="2" ry="2" fill="#feca57" />
+              <ellipse class="butterfly-wing" cx="8.5" cy="8" rx="2" ry="2" fill="#feca57" />
+              <rect x="5.5" y="2" width="1" height="8" rx="0.5" fill="#3a3350" />
+            </svg>
+          </div>
+
+          <!-- Grass Ground Line -->
+          <div class="scene-ground" aria-hidden="true">
+            <div class="scene-ground-soil"></div>
+          </div>
+
+          <!-- Solid High-Contrast Readable Header Plate -->
+          <div class="header-title-plate">
+            <div class="brand-lockup">
+              <!-- Pixel Mascot (Sir Fluff: Animated Hopping, Wiggling Ears & Blinking Eyes) -->
+              <div class="mascot-container" title="Sir Fluff, your Hopping Quest Companion">
+                <svg class="mascot-svg" width="56" height="56" viewBox="0 0 28 28" fill="none" shape-rendering="crispEdges">
+                  <!-- Whole Hopping Group -->
+                  <g class="mascot-hopper">
+                    <!-- Left Ear with Wiggle -->
+                    <g class="mascot-left-ear">
+                      <rect x="6" y="2" width="4" height="8" fill="#ffffff" stroke="#3a3350" stroke-width="1.5" />
+                      <rect x="7" y="4" width="2" height="5" fill="#fbc0d4" />
+                    </g>
+                    <!-- Right Ear with Staggered Wiggle -->
+                    <g class="mascot-right-ear">
+                      <rect x="17" y="2" width="4" height="8" fill="#ffffff" stroke="#3a3350" stroke-width="1.5" />
+                      <rect x="18" y="4" width="2" height="5" fill="#fbc0d4" />
+                    </g>
+                    <!-- Head & Body -->
+                    <rect x="5" y="9" width="17" height="12" fill="#ffffff" stroke="#3a3350" stroke-width="1.5" />
+                    <!-- Rosy Cheeks -->
+                    <rect x="6" y="15" width="3" height="2" fill="#ff9ebb" />
+                    <rect x="18" y="15" width="3" height="2" fill="#ff9ebb" />
+                    <!-- Twitching Nose & Mouth -->
+                    <g class="mascot-snout">
+                      <rect x="12" y="14" width="3" height="1" fill="#ff9ebb" />
+                      <rect x="13" y="16" width="1" height="2" fill="#3a3350" />
+                    </g>
+                    <!-- Blinking Eyes with Shiny Sparkle -->
+                    <g class="mascot-eyes">
+                      <rect x="8" y="12" width="3" height="3.5" fill="#3a3350" />
+                      <rect x="8" y="12" width="1" height="1.5" fill="#ffffff" />
+                      <rect x="16" y="12" width="3" height="3.5" fill="#3a3350" />
+                      <rect x="16" y="12" width="1" height="1.5" fill="#ffffff" />
+                    </g>
+                    <!-- Body Lower & Little Paws -->
+                    <rect x="7" y="20" width="13" height="4" fill="#ffffff" stroke="#3a3350" stroke-width="1.5" />
+                    <rect x="8" y="23" width="3" height="2" fill="#fbc0d4" stroke="#3a3350" stroke-width="1" />
+                    <rect x="16" y="23" width="3" height="2" fill="#fbc0d4" stroke="#3a3350" stroke-width="1" />
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Brand Title Text -->
+              <div class="brand-text-col">
+                <h1 class="app-main-title">
+                  <span class="css-pixel-star" aria-hidden="true"></span>
+                  PIXELQUEST
+                </h1>
+                <p class="app-sub-title">✦ 8-BIT QUEST &amp; TASK LOG ✦</p>
+              </div>
+            </div>
+
+            <!-- Header Controls: Sound FX Toggle -->
+            <div class="header-actions">
+              <button
+                type="button"
+                id="sfxToggleBtn"
+                class="sfx-toggle-btn"
+                aria-pressed="false"
+                title="Toggle 8-bit sound effects (Default: OFF)"
+              >
+                <span id="sfxIcon">🔇</span>
+                <span id="sfxLabel">SFX: OFF</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           WINDOW 1: NEW TASK INPUT (MINT GREEN ACCENT)
+           ============================================================ -->
+      <section class="pixel-window theme-mint" aria-labelledby="forgeHeading">
+        <header class="window-titlebar">
+          <div class="titlebar-left">
+            <span id="forgeHeading" class="titlebar-title">⚔️ NEW QUEST FORGE</span>
+          </div>
+          <div class="window-buttons" aria-hidden="true">
+            <button class="win-btn" tabindex="-1">_</button>
+            <button class="win-btn" tabindex="-1">□</button>
+            <button class="win-btn" tabindex="-1">×</button>
+          </div>
+        </header>
+
+        <div class="window-body">
+          <form id="addTaskForm" class="add-task-form" autocomplete="off">
+            <!-- Text Input Row -->
+            <div class="input-main-row">
+              <input
+                type="text"
+                id="taskTextInput"
+                class="pixel-input-text"
+                placeholder="What quest will you conquer today?..."
+                maxlength="140"
+                aria-label="New Quest Title"
+              />
+              <button type="submit" class="pixel-btn-primary" id="addTaskSubmitBtn">
+                <span>+ ADD QUEST</span>
+              </button>
+            </div>
+
+            <!-- Optional Notes Input Row -->
+            <div class="notes-input-row">
+              <input
+                type="text"
+                id="taskNotesInput"
+                class="pixel-input-notes"
+                placeholder="📝 Optional quest notes, lore, or details (visible on hover/expand)..."
+                maxlength="280"
+                aria-label="Optional Quest Notes"
+              />
+            </div>
+
+            <!-- Error Feedback Box -->
+            <div id="inputErrorFeedback" class="input-feedback-msg" role="alert">
+              ⚠️ Oops! A quest needs a title before your hero can embark!
+            </div>
+
+            <!-- Metadata Controls Row: Priority + Due Date -->
+            <div class="form-meta-row">
+              <div class="meta-controls-group">
+                <!-- Priority Selector -->
+                <div class="control-inline-label">
+                  <span>PRIORITY:</span>
+                  <div class="priority-button-group" role="radiogroup" aria-label="Task Priority">
+                    <button
+                      type="button"
+                      class="p-choice-btn"
+                      data-priority="low"
+                      role="radio"
+                      aria-checked="false"
+                    >
+                      <span class="p-dot p-dot-low"></span>
+                      <span>LOW</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="p-choice-btn selected"
+                      data-priority="med"
+                      role="radio"
+                      aria-checked="true"
+                    >
+                      <span class="p-dot p-dot-med"></span>
+                      <span>MED</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="p-choice-btn"
+                      data-priority="high"
+                      role="radio"
+                      aria-checked="false"
+                    >
+                      <span class="p-dot p-dot-high"></span>
+                      <span>HIGH</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Due Date Picker -->
+                <div class="date-input-wrapper">
+                  <label for="taskDueDateInput" class="control-inline-label">DUE DATE:</label>
+                  <input
+                    type="date"
+                    id="taskDueDateInput"
+                    class="pixel-input-date"
+                    aria-label="Optional Due Date"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Category Selector Row -->
+            <div class="category-select-row">
+              <span class="control-inline-label">CATEGORY:</span>
+              <div class="category-button-group" role="radiogroup" aria-label="Quest Category">
+                <button type="button" class="cat-choice-btn" data-category="work" role="radio" aria-checked="false">
+                  <span>💼 WORK</span>
+                </button>
+                <button type="button" class="cat-choice-btn selected" data-category="personal" role="radio" aria-checked="true">
+                  <span>🏠 PERSONAL</span>
+                </button>
+                <button type="button" class="cat-choice-btn" data-category="health" role="radio" aria-checked="false">
+                  <span>💖 HEALTH</span>
+                </button>
+                <button type="button" class="cat-choice-btn" data-category="study" role="radio" aria-checked="false">
+                  <span>📚 STUDY</span>
+                </button>
+                <button type="button" class="cat-choice-btn" data-category="adventure" role="radio" aria-checked="false">
+                  <span>⚔️ ADVENTURE</span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           WINDOW 2: HERO STATUS & PROGRESS BAR (YELLOW ACCENT)
+           ============================================================ -->
+      <section class="pixel-window theme-yellow" aria-labelledby="statusHeading">
+        <header class="window-titlebar">
+          <div class="titlebar-left">
+            <span id="statusHeading" class="titlebar-title">⭐ HERO STATUS &amp; PROGRESS</span>
+          </div>
+          <div class="window-buttons" aria-hidden="true">
+            <button class="win-btn" tabindex="-1">_</button>
+            <button class="win-btn" tabindex="-1">□</button>
+            <button class="win-btn" tabindex="-1">×</button>
+          </div>
+        </header>
+
+        <div class="window-body">
+          <div class="progress-card-content">
+            <div class="progress-metrics-row">
+              <div class="hero-rank-display" id="heroRankDisplay">
+                <span>👑 RANK: NOVICE ADVENTURER</span>
+              </div>
+              <div class="quest-counts-display" id="questCountsSummary">
+                0 PENDING · 0 COMPLETED
+              </div>
+            </div>
+
+            <!-- Segmented 8-Bit Progress Bar -->
+            <div
+              class="pixel-progress-track"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              id="pixelProgressBar"
+            >
+              <div class="pixel-progress-fill" id="pixelProgressFill" style="width: 0%;"></div>
+              <div class="progress-percentage-label" id="progressPercentageLabel">
+                LEVEL PROGRESS: 0%
+              </div>
+            </div>
+
+            <!-- Celebratory Banner on 100% Completion -->
+            <div class="celebration-banner" id="celebrationBanner" role="status">
+              <p class="celebration-text">
+                <span class="css-pixel-heart" aria-hidden="true"></span>
+                <span>🎉 QUEST COMPLETE! All tasks cleared! You are a Legend!</span>
+                <span class="css-pixel-star" aria-hidden="true"></span>
+              </p>
+              <button
+                type="button"
+                class="firework-replay-btn"
+                id="fireworkReplayBtn"
+                title="Launch celebratory fireworks across the sky!"
+              >
+                <span>🎆 LAUNCH FIREWORKS</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           WINDOW 3: ACTIVE QUEST LOG (LAVENDER ACCENT)
+           ============================================================ -->
+      <section class="pixel-window theme-lavender" aria-labelledby="logHeading">
+        <header class="window-titlebar">
+          <div class="titlebar-left">
+            <span id="logHeading" class="titlebar-title">📜 QUEST LOG</span>
+          </div>
+          <div class="window-buttons" aria-hidden="true">
+            <button class="win-btn" tabindex="-1">_</button>
+            <button class="win-btn" tabindex="-1">□</button>
+            <button class="win-btn" tabindex="-1">×</button>
+          </div>
+        </header>
+
+        <div class="window-body">
+          <!-- Toolbar: Status Filter Tabs, Category Tabs & Reset Actions -->
+          <div class="log-toolbar">
+            <!-- Row 1: Status Filters + Reset Actions -->
+            <div class="toolbar-top-row">
+              <div class="filter-tabs-group" role="tablist" aria-label="Task Status Filters">
+                <button
+                  type="button"
+                  class="filter-tab-btn active"
+                  data-filter="all"
+                  role="tab"
+                  aria-selected="true"
+                  id="filterAllBtn"
+                >
+                  <span>ALL (<span id="countAllTab">0</span>)</span>
+                </button>
+                <button
+                  type="button"
+                  class="filter-tab-btn"
+                  data-filter="pending"
+                  role="tab"
+                  aria-selected="false"
+                  id="filterPendingBtn"
+                >
+                  <span>PENDING (<span id="countPendingTab">0</span>)</span>
+                </button>
+                <button
+                  type="button"
+                  class="filter-tab-btn"
+                  data-filter="completed"
+                  role="tab"
+                  aria-selected="false"
+                  id="filterCompletedBtn"
+                >
+                  <span>COMPLETED (<span id="countCompletedTab">0</span>)</span>
+                </button>
+              </div>
+
+              <div class="toolbar-actions-group">
+                <button
+                  type="button"
+                  class="reset-completed-btn"
+                  id="resetCompletedBtn"
+                  title="Reset all completed tasks back to pending for a fresh start each day"
+                  aria-label="Reset all completed tasks at once"
+                >
+                  <span>🔄 RESET COMPLETED</span>
+                </button>
+                <button
+                  type="button"
+                  class="clear-completed-btn"
+                  id="clearCompletedBtn"
+                  title="Delete all finished quests permanently"
+                  aria-label="Clear completed tasks"
+                >
+                  <span>🧹 CLEAR COMPLETED</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Row 2: Category Filter Tabs -->
+            <div class="category-toolbar-row">
+              <span class="category-filter-label">CATEGORY:</span>
+              <div class="category-filter-tabs" role="tablist" aria-label="Quest Category Filters">
+                <button type="button" class="cat-filter-tab active" data-cat="all" role="tab" aria-selected="true">
+                  <span>✦ ALL (<span id="countCatAll">0</span>)</span>
+                </button>
+                <button type="button" class="cat-filter-tab" data-cat="work" role="tab" aria-selected="false">
+                  <span>💼 WORK (<span id="countCatWork">0</span>)</span>
+                </button>
+                <button type="button" class="cat-filter-tab" data-cat="personal" role="tab" aria-selected="false">
+                  <span>🏠 PERSONAL (<span id="countCatPersonal">0</span>)</span>
+                </button>
+                <button type="button" class="cat-filter-tab" data-cat="health" role="tab" aria-selected="false">
+                  <span>💖 HEALTH (<span id="countCatHealth">0</span>)</span>
+                </button>
+                <button type="button" class="cat-filter-tab" data-cat="study" role="tab" aria-selected="false">
+                  <span>📚 STUDY (<span id="countCatStudy">0</span>)</span>
+                </button>
+                <button type="button" class="cat-filter-tab" data-cat="adventure" role="tab" aria-selected="false">
+                  <span>⚔️ ADVENTURE (<span id="countCatAdventure">0</span>)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quest Lists / Subsections Container -->
+          <div class="quest-sections-container" id="questContainer">
+            <!-- Pending Section -->
+            <div class="quest-section-block" id="pendingSection">
+              <h2 class="quest-sub-header">
+                <span>⚔️ PENDING QUESTS</span>
+                <span class="quest-sub-count" id="pendingSectionCount">(0)</span>
+              </h2>
+              <ul class="quest-list" id="pendingQuestList" aria-label="Pending Quests"></ul>
+            </div>
+
+            <!-- Completed Section -->
+            <div class="quest-section-block" id="completedSection">
+              <div class="quest-sub-header-container">
+                <h2 class="quest-sub-header">
+                  <span>✨ CONQUERED QUESTS</span>
+                  <span class="quest-sub-count" id="completedSectionCount">(0)</span>
+                </h2>
+                <button
+                  type="button"
+                  class="section-reset-btn"
+                  id="sectionResetCompletedBtn"
+                  title="Reset all completed quests for a fresh start today"
+                  aria-label="Reset all completed quests"
+                >
+                  <span>🔄 RESET ALL</span>
+                </button>
+              </div>
+              <ul class="quest-list" id="completedQuestList" aria-label="Completed Quests"></ul>
+            </div>
+
+            <!-- Empty State Fallback -->
+            <div class="quest-empty-state" id="emptyStateDisplay" style="display: none;">
+              <div class="empty-state-art">
+                <svg width="44" height="44" viewBox="0 0 16 16" fill="none" shape-rendering="crispEdges">
+                  <rect x="2" y="5" width="12" height="9" fill="#d2beff" stroke="#3a3350" stroke-width="1.5" />
+                  <rect x="2" y="3" width="12" height="4" fill="#fde883" stroke="#3a3350" stroke-width="1.5" />
+                  <rect x="7" y="7" width="2" height="3" fill="#3a3350" />
+                </svg>
+              </div>
+              <h3 class="empty-state-title" id="emptyStateTitle">NO QUESTS FOUND</h3>
+              <p class="empty-state-desc" id="emptyStateDesc">
+                Write a new quest above to start your 8-bit adventure!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+         WINDOW 4: ADVENTURER'S MANUAL & TIPS (BABY PINK ACCENT)
+         ============================================================ -->
+      <section class="pixel-window theme-pink" aria-labelledby="manualHeading">
+        <header class="window-titlebar">
+          <div class="titlebar-left">
+            <span id="manualHeading" class="titlebar-title">💬 ADVENTURER'S MANUAL</span>
+          </div>
+          <div class="window-buttons" aria-hidden="true">
+            <button class="win-btn" tabindex="-1">_</button>
+            <button class="win-btn" tabindex="-1">□</button>
+            <button class="win-btn" tabindex="-1">×</button>
+          </div>
+        </header>
+
+        <div class="window-body">
+          <ul class="manual-tips-list">
+            <li class="manual-tip-card">
+              <span class="tip-icon">⌨️</span>
+              <div class="tip-text">
+                <strong>QUICK ADD &amp; EDIT</strong>
+                Press Enter to add or save edits. Press Esc to cancel inline editing.
+              </div>
+            </li>
+            <li class="manual-tip-card">
+              <span class="tip-icon">🎯</span>
+              <div class="tip-text">
+                <strong>CYCLE PRIORITY</strong>
+                Click any quest's priority tag to cycle between Low, Med, and High!
+              </div>
+            </li>
+            <li class="manual-tip-card">
+              <span class="tip-icon">📜</span>
+              <div class="tip-text">
+                <strong>QUEST NOTES &amp; LORE</strong>
+                Add optional notes to quests! Hover or click the 📜 NOTES tag to expand/collapse.
+              </div>
+            </li>
+            <li class="manual-tip-card">
+              <span class="tip-icon">🌅</span>
+              <div class="tip-text">
+                <strong>DAILY QUEST RESET</strong>
+                Click 🔄 RESET COMPLETED to uncheck all finished quests for a fresh start each day!
+              </div>
+            </li>
+            <li class="manual-tip-card">
+              <span class="tip-icon">🏷️</span>
+              <div class="tip-text">
+                <strong>QUEST CATEGORIES</strong>
+                Tag quests with Work, Personal, Health, Study, or Adventure, and filter them via toolbar tabs!
+              </div>
+            </li>
+            <li class="manual-tip-card">
+              <span class="tip-icon">☀️</span>
+              <div class="tip-text">
+                <strong>LIVING WORLD SKY</strong>
+                Watch the sky cycle from day to starry night with moving sun &amp; moon, wildlife, and resting owl!
+              </div>
+            </li>
+            <li class="manual-tip-card">
+              <span class="tip-icon">💾</span>
+              <div class="tip-text">
+                <strong>AUTO-SAVE CRYSTAL</strong>
+                All quests and progress are auto-saved in your browser's persistent localStorage.
+              </div>
+            </li>
+            <li class="manual-tip-card">
+              <span class="tip-icon">🎆</span>
+              <div class="tip-text">
+                <strong>100% COMPLETION FIREWORKS</strong>
+                Conquer all quests to reach 100% progress and watch spectacular retro fireworks explode across the sky!
+              </div>
+            </li>
+            <li class="manual-tip-card">
+              <span class="tip-icon">🔊</span>
+              <div class="tip-text">
+                <strong>RETRO 8-BIT AUDIO</strong>
+                Toggle the SFX switch in the top header for synthesized Game Boy beeps.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Toast Notification Mount -->
+    <div id="toastContainer" class="pixel-toast-container"></div>
+
+    <!-- ============================================================
+         INTERACTIVE RETRO TO-DO JAVASCRIPT (VANILLA JS)
+         ============================================================ -->
+    <script>
+      (function () {
+        "use strict";
+
+        /* ============================================================
+           STORAGE CONSTANTS & INITIAL STATE
+           ============================================================ */
+        const STORAGE_KEY = "pixelquest_tasks_v1";
+        const SFX_STORAGE_KEY = "pixelquest_sfx_enabled";
+
+        const CATEGORIES = {
+          work: { id: "work", name: "Work", icon: "💼" },
+          personal: { id: "personal", name: "Personal", icon: "🏠" },
+          health: { id: "health", name: "Health", icon: "💖" },
+          study: { id: "study", name: "Study", icon: "📚" },
+          adventure: { id: "adventure", name: "Adventure", icon: "⚔️" }
+        };
+
+        const DEFAULT_QUESTS = [
+          {
+            id: "quest-init-1",
+            text: "⚔️ Defeat the Morning Fog (Drink a tall glass of water)",
+            notes: "Ancient sages proclaim: 500ml of fresh well water restores +25 Stamina and dispels sleep curses.",
+            priority: "high",
+            category: "health",
+            dueDate: "",
+            completed: false,
+            createdAt: Date.now() - 3600000 * 2,
+            completedAt: null
+          },
+          {
+            id: "quest-init-2",
+            text: "📜 Plan daily legendary feats & priorities",
+            notes: "Review quest log, assign Low/Med/High flags, and consult the guild map before noon.",
+            priority: "med",
+            category: "work",
+            dueDate: new Date().toISOString().split("T")[0],
+            completed: true,
+            createdAt: Date.now() - 3600000 * 4,
+            completedAt: Date.now() - 3600000 * 1
+          },
+          {
+            id: "quest-init-3",
+            text: "✨ Test 8-Bit SFX toggle & cycle priority tags",
+            notes: "Click priority dots to cycle, toggle the audio crystal in the header, and hover over quest cards.",
+            priority: "low",
+            category: "adventure",
+            dueDate: "",
+            completed: false,
+            createdAt: Date.now() - 3600000,
+            completedAt: null
+          }
+        ];
+
+        let state = {
+          tasks: [],
+          filter: "all", // 'all' | 'pending' | 'completed'
+          categoryFilter: "all", // 'all' | 'work' | 'personal' | 'health' | 'study' | 'adventure'
+          sfxEnabled: false,
+          selectedPriority: "med",
+          selectedCategory: "personal",
+          editingTaskId: null,
+          expandedTaskIds: new Set(),
+          timeMode: "auto", // 'auto' | 'day' | 'sunset' | 'night'
+          activeSkyTheme: "day",
+          hasTriggered100Fireworks: false
+        };
+
+        /* ============================================================
+           DYNAMIC SKY & TIME OF DAY CONTROLLER
+           ============================================================ */
+        function updateSkyTheme(mode) {
+          if (mode) state.timeMode = mode;
+          const now = new Date();
+          const hours = now.getHours();
+
+          let determinedTheme = "day";
+          if (state.timeMode === "auto") {
+            if (hours >= 6 && hours < 17) {
+              determinedTheme = "day";
+            } else if (hours >= 17 && hours < 20) {
+              determinedTheme = "sunset";
+            } else {
+              determinedTheme = "night";
+            }
+          } else {
+            determinedTheme = state.timeMode;
+          }
+
+          state.activeSkyTheme = determinedTheme;
+
+          const skyLayer = document.getElementById("skyLayer");
+          const sceneViewport = document.getElementById("sceneViewport");
+          if (skyLayer) {
+            skyLayer.className = `sky-layer theme-${determinedTheme}`;
+          }
+          if (sceneViewport) {
+            sceneViewport.className = `scene-viewport theme-${determinedTheme}`;
+          }
+
+          // Format local time display for auto button
+          const timeBadge = document.getElementById("timeBadgeText");
+          if (timeBadge) {
+            let h = hours % 12;
+            h = h ? h : 12;
+            const m = now.getMinutes().toString().padStart(2, "0");
+            const ampm = hours >= 12 ? "PM" : "AM";
+            timeBadge.textContent = state.timeMode === "auto" ? `AUTO (${h}:${m} ${ampm})` : "AUTO";
+          }
+
+          // Update active buttons
+          document.querySelectorAll(".time-toggle-btn").forEach((btn) => {
+            btn.classList.toggle("active", btn.dataset.time === state.timeMode);
+          });
+        }
+
+        /* ============================================================
+           WEB AUDIO API 8-BIT SOUND SYNTHESIZER (SQUARE OSCILLATOR)
+           ============================================================ */
+        let audioCtx = null;
+
+        function getAudioContext() {
+          if (!audioCtx) {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (AudioContextClass) {
+              audioCtx = new AudioContextClass();
+            }
+          }
+          if (audioCtx && audioCtx.state === "suspended") {
+            audioCtx.resume();
+          }
+          return audioCtx;
+        }
+
+        function playBeep(freq, type, duration, startTime, gainVal = 0.08) {
+          if (!state.sfxEnabled) return;
+          const ctx = getAudioContext();
+          if (!ctx) return;
+
+          try {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.type = type || "square";
+            osc.frequency.setValueAtTime(freq, startTime);
+
+            gain.gain.setValueAtTime(gainVal, startTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(startTime);
+            osc.stop(startTime + duration);
+          } catch (err) {
+            // Audio context handled gracefully
+          }
+        }
+
+        const SoundFX = {
+          playAdd() {
+            if (!state.sfxEnabled) return;
+            const ctx = getAudioContext();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+            playBeep(261.63, "square", 0.06, now);       // C4
+            playBeep(329.63, "square", 0.06, now + 0.06); // E4
+            playBeep(392.00, "square", 0.08, now + 0.12); // G4
+            playBeep(523.25, "square", 0.12, now + 0.18); // C5
+          },
+
+          playComplete() {
+            if (!state.sfxEnabled) return;
+            const ctx = getAudioContext();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+            playBeep(329.63, "square", 0.08, now);       // E4
+            playBeep(392.00, "square", 0.08, now + 0.08); // G4
+            playBeep(493.88, "square", 0.08, now + 0.16); // B4
+            playBeep(659.25, "square", 0.20, now + 0.24); // E5
+          },
+
+          playDelete() {
+            if (!state.sfxEnabled) return;
+            const ctx = getAudioContext();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+            playBeep(392.00, "triangle", 0.05, now);       // G4
+            playBeep(293.66, "triangle", 0.06, now + 0.05); // D4
+            playBeep(196.00, "triangle", 0.09, now + 0.11); // G3
+          },
+
+          playCycle() {
+            if (!state.sfxEnabled) return;
+            const ctx = getAudioContext();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+            playBeep(440.0, "square", 0.05, now, 0.06);
+            playBeep(554.37, "square", 0.06, now + 0.05, 0.06);
+          },
+
+          playError() {
+            if (!state.sfxEnabled) return;
+            const ctx = getAudioContext();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+            playBeep(180, "sawtooth", 0.09, now, 0.1);
+            playBeep(140, "sawtooth", 0.12, now + 0.09, 0.1);
+          },
+
+          playCelebrate() {
+            if (!state.sfxEnabled) return;
+            const ctx = getAudioContext();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+            const notes = [261.63, 329.63, 392.0, 523.25, 659.25, 783.99];
+            notes.forEach((freq, idx) => {
+              playBeep(freq, "square", 0.08, now + idx * 0.08, 0.08);
+            });
+          },
+
+          playFireworkLaunch() {
+            if (!state.sfxEnabled) return;
+            const ctx = getAudioContext();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+            try {
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              osc.type = "sine";
+              osc.frequency.setValueAtTime(280, now);
+              osc.frequency.exponentialRampToValueAtTime(1150, now + 0.36);
+              gain.gain.setValueAtTime(0.04, now);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + 0.36);
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.start(now);
+              osc.stop(now + 0.36);
+            } catch (e) {}
+          },
+
+          playFireworkBurst() {
+            if (!state.sfxEnabled) return;
+            const ctx = getAudioContext();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+            const freqs = [220, 310, 180, 420, 520];
+            freqs.forEach((freq, idx) => {
+              playBeep(freq, "square", 0.07, now + idx * 0.035, 0.05);
+            });
+          }
+        };
+
+        /* ============================================================
+           PERSISTENCE (LOCAL STORAGE WITH TRY/CATCH)
+           ============================================================ */
+        function loadState() {
+          try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) {
+              state.tasks = JSON.parse(raw);
+            } else {
+              state.tasks = [...DEFAULT_QUESTS];
+              saveTasks();
+            }
+          } catch (e) {
+            console.warn("Storage access failed, using memory fallback.", e);
+            state.tasks = [...DEFAULT_QUESTS];
+          }
+
+          try {
+            const sfxVal = localStorage.getItem(SFX_STORAGE_KEY);
+            state.sfxEnabled = sfxVal === "true"; // default off
+          } catch (e) {
+            state.sfxEnabled = false;
+          }
+        }
+
+        function saveTasks() {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state.tasks));
+          } catch (e) {
+            console.warn("Unable to save tasks to localStorage", e);
+          }
+        }
+
+        function saveSfxSetting() {
+          try {
+            localStorage.setItem(SFX_STORAGE_KEY, state.sfxEnabled ? "true" : "false");
+          } catch (e) {
+            // gracefully ignored
+          }
+        }
+
+        /* ============================================================
+           HELPERS & FORMATTERS
+           ============================================================ */
+        function formatDateTime(timestamp) {
+          if (!timestamp) return "";
+          const d = new Date(timestamp);
+          const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          const month = monthNames[d.getMonth()];
+          const date = d.getDate();
+          let hours = d.getHours();
+          const minutes = d.getMinutes().toString().padStart(2, "0");
+          const ampm = hours >= 12 ? "PM" : "AM";
+          hours = hours % 12;
+          hours = hours ? hours : 12;
+          return `${month} ${date}, ${hours}:${minutes} ${ampm}`;
+        }
+
+        function isTaskOverdue(dueDateStr) {
+          if (!dueDateStr) return false;
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          const due = new Date(dueDateStr + "T00:00:00");
+          return due < today;
+        }
+
+        function formatDueDateDisplay(dueDateStr) {
+          if (!dueDateStr) return "";
+          try {
+            const parts = dueDateStr.split("-");
+            if (parts.length === 3) {
+              const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+              const mIndex = parseInt(parts[1], 10) - 1;
+              const dNum = parseInt(parts[2], 10);
+              return `${monthNames[mIndex]} ${dNum}`;
+            }
+          } catch (e) {}
+          return dueDateStr;
+        }
+
+        function showToast(message) {
+          const container = document.getElementById("toastContainer");
+          if (!container) return;
+          const toast = document.createElement("div");
+          toast.className = "pixel-toast";
+          toast.textContent = message;
+          container.appendChild(toast);
+          setTimeout(() => {
+            if (toast.parentNode) {
+              toast.parentNode.removeChild(toast);
+            }
+          }, 2600);
+        }
+
+        /* ============================================================
+           RETRO 8-BIT FIREWORKS SYSTEM IN SKY BACKGROUND
+           ============================================================ */
+        const FIREWORK_PALETTES = [
+          // 1. Royal Gold & Amber
+          ["#ffe600", "#ffa502", "#fffa65", "#ffffff", "#ffd32a"],
+          // 2. Cyan & Magic Blue
+          ["#00d2d3", "#54a0ff", "#70a1ff", "#48dbfb", "#ffffff"],
+          // 3. Neon Ruby & Pink
+          ["#ff4757", "#ff6b81", "#ff9ff3", "#ffffff", "#f368e0"],
+          // 4. Emerald & Jade
+          ["#2ed573", "#7bed9f", "#1dd1a1", "#10ac84", "#ffffff"],
+          // 5. Cosmic Lavender & Amethyst
+          ["#9c88ff", "#8c7ae6", "#dcdde1", "#e056fd", "#ffffff"],
+          // 6. Rainbow Spectrum
+          ["#ff4757", "#ffa502", "#ffe600", "#2ed573", "#00d2d3", "#9c88ff"]
+        ];
+
+        let activeFireworkTimeouts = [];
+
+        function launchSingleFirework(xPercent, yPercent, paletteIndex) {
+          const container = document.getElementById("skyFireworksContainer");
+          if (!container) return;
+
+          const palette = FIREWORK_PALETTES[paletteIndex % FIREWORK_PALETTES.length];
+          const cluster = document.createElement("div");
+          cluster.className = "firework-cluster";
+          cluster.style.left = `${xPercent}%`;
+          cluster.style.top = `${yPercent}%`;
+
+          // 1. Ascending Rocket Trail
+          const rocket = document.createElement("div");
+          rocket.className = "firework-rocket-trail";
+          cluster.appendChild(rocket);
+
+          // Audio whoosh
+          SoundFX.playFireworkLaunch();
+
+          container.appendChild(cluster);
+
+          // Detonation occurs 420ms after launch
+          const boomTimer = setTimeout(() => {
+            if (!cluster.parentNode) return;
+
+            // Remove rocket trail
+            if (rocket.parentNode) rocket.parentNode.removeChild(rocket);
+
+            // Explosion audio
+            SoundFX.playFireworkBurst();
+
+            // 2. Central Epicenter Flash
+            const flash = document.createElement("div");
+            flash.className = "firework-epicenter-flash";
+            flash.style.background = `radial-gradient(circle, #ffffff 0%, ${palette[0]} 40%, rgba(255,255,255,0) 70%)`;
+            cluster.appendChild(flash);
+
+            // 3. Exploding Pixel Sparks (20 radial sparks)
+            const sparkCount = 20;
+            for (let i = 0; i < sparkCount; i++) {
+              const spark = document.createElement("div");
+              const isStar = i % 5 === 0;
+              const isCross = i % 3 === 0;
+
+              spark.className = `firework-spark ${isStar ? "spark-star" : (isCross ? "spark-cross" : "")}`;
+              if (isStar) spark.textContent = i % 2 === 0 ? "✦" : "★";
+
+              const color = palette[i % palette.length];
+              spark.style.setProperty("--spark-color", color);
+
+              const angle = (i / sparkCount) * 2 * Math.PI + (Math.random() * 0.18 - 0.09);
+              const distance = 30 + Math.random() * 36; // 30px to 66px radius (fits inside the scene without clipping)
+              const targetX = Math.round(Math.cos(angle) * distance);
+              const targetY = Math.round(Math.sin(angle) * distance);
+              const duration = (1.6 + Math.random() * 0.5).toFixed(2);
+
+              spark.style.setProperty("--target-x", `${targetX}px`);
+              spark.style.setProperty("--target-y", `${targetY}px`);
+              spark.style.setProperty("--duration", `${duration}s`);
+
+              cluster.appendChild(spark);
+            }
+
+            // 4. Stardust glitters
+            for (let j = 0; j < 8; j++) {
+              const dust = document.createElement("div");
+              dust.className = "firework-stardust";
+              const dAngle = Math.random() * 2 * Math.PI;
+              const dDist = 12 + Math.random() * 32;
+              const dustX = Math.round(Math.cos(dAngle) * dDist);
+              const dustY = Math.round(Math.sin(dAngle) * dDist);
+              dust.style.setProperty("--dust-x", `${dustX}px`);
+              dust.style.setProperty("--dust-y", `${dustY}px`);
+              dust.style.animationDelay = `${(0.1 + Math.random() * 0.3).toFixed(2)}s`;
+              cluster.appendChild(dust);
+            }
+
+            // Cleanup cluster after animations complete
+            const cleanupTimer = setTimeout(() => {
+              if (cluster.parentNode) {
+                cluster.parentNode.removeChild(cluster);
+              }
+            }, 2900);
+            activeFireworkTimeouts.push(cleanupTimer);
+
+          }, 420);
+
+          activeFireworkTimeouts.push(boomTimer);
+        }
+
+        function triggerSkyFireworks() {
+          const container = document.getElementById("skyFireworksContainer");
+          if (!container) return;
+
+          // Clear any ongoing timeouts
+          activeFireworkTimeouts.forEach((t) => clearTimeout(t));
+          activeFireworkTimeouts = [];
+
+          showToast("🎆 LEVEL CONQUERED! 100% Fireworks in the sky!");
+
+          // Orchestrated multi-burst display across the sky — kept away from
+          // the top/bottom edges of the scene so no spark gets clipped off,
+          // and spaced out a bit more so the show lingers longer.
+          const burstSchedule = [
+            { x: 24, y: 46, palette: 0, delay: 0 },
+            { x: 74, y: 40, palette: 1, delay: 500 },
+            { x: 50, y: 50, palette: 2, delay: 1050 },
+            { x: 34, y: 44, palette: 3, delay: 1650 },
+            { x: 66, y: 48, palette: 5, delay: 2250 },
+            { x: 50, y: 38, palette: 4, delay: 2900 },
+            { x: 40, y: 52, palette: 1, delay: 3550 },
+            { x: 60, y: 44, palette: 3, delay: 4100 }
+          ];
+
+          burstSchedule.forEach((burst) => {
+            const timer = setTimeout(() => {
+              launchSingleFirework(burst.x, burst.y, burst.palette);
+            }, burst.delay);
+            activeFireworkTimeouts.push(timer);
+          });
+        }
+
+        /* ============================================================
+           CORE TASK ACTIONS
+           ============================================================ */
+        function addTask(text, priority, dueDate, notes, category) {
+          const trimmed = text.trim();
+          if (!trimmed) {
+            return false;
+          }
+
+          const newTask = {
+            id: "quest-" + Date.now() + "-" + Math.random().toString(36).substring(2, 6),
+            text: trimmed,
+            notes: (notes || "").trim(),
+            priority: priority || "med",
+            category: category || state.selectedCategory || "personal",
+            dueDate: dueDate || "",
+            completed: false,
+            createdAt: Date.now(),
+            completedAt: null
+          };
+
+          state.tasks.unshift(newTask);
+          saveTasks();
+          SoundFX.playAdd();
+          render();
+          showToast("⚔️ New quest added to log!");
+          return true;
+        }
+
+        function toggleTaskComplete(id) {
+          const task = state.tasks.find((t) => t.id === id);
+          if (!task) return;
+
+          task.completed = !task.completed;
+          if (task.completed) {
+            task.completedAt = Date.now();
+            SoundFX.playComplete();
+            showToast("✨ Quest completed! XP gained!");
+          } else {
+            task.completedAt = null;
+            SoundFX.playCycle();
+          }
+
+          saveTasks();
+          render();
+        }
+
+        function cycleTaskPriority(id) {
+          const task = state.tasks.find((t) => t.id === id);
+          if (!task) return;
+
+          const cycleMap = { low: "med", med: "high", high: "low" };
+          task.priority = cycleMap[task.priority] || "low";
+
+          saveTasks();
+          SoundFX.playCycle();
+          render();
+        }
+
+        function toggleTaskExpanded(id) {
+          if (state.expandedTaskIds.has(id)) {
+            state.expandedTaskIds.delete(id);
+          } else {
+            state.expandedTaskIds.add(id);
+          }
+          SoundFX.playCycle();
+          render();
+        }
+
+        function saveTaskEdit(id, newText, newNotes, newCategory) {
+          const trimmed = newText.trim();
+          if (!trimmed) {
+            return false;
+          }
+
+          const task = state.tasks.find((t) => t.id === id);
+          if (!task) return false;
+
+          task.text = trimmed;
+          task.notes = (newNotes !== undefined ? newNotes : (task.notes || "")).trim();
+          if (newCategory) {
+            task.category = newCategory;
+          }
+          state.editingTaskId = null;
+          saveTasks();
+          SoundFX.playAdd();
+          render();
+          showToast("💾 Quest details updated!");
+          return true;
+        }
+
+        function cancelTaskEdit() {
+          state.editingTaskId = null;
+          render();
+        }
+
+        function deleteTaskWithPoof(id, cardElement) {
+          SoundFX.playDelete();
+
+          if (cardElement) {
+            cardElement.classList.add("poof-animation");
+            setTimeout(() => {
+              state.tasks = state.tasks.filter((t) => t.id !== id);
+              if (state.editingTaskId === id) state.editingTaskId = null;
+              saveTasks();
+              render();
+              showToast("💨 Quest abandoned & removed.");
+            }, 320);
+          } else {
+            state.tasks = state.tasks.filter((t) => t.id !== id);
+            if (state.editingTaskId === id) state.editingTaskId = null;
+            saveTasks();
+            render();
+          }
+        }
+
+        function resetCompletedTasks() {
+          const completedTasks = state.tasks.filter((t) => t.completed);
+          if (completedTasks.length === 0) {
+            showToast("ℹ️ No conquered quests to reset!");
+            return;
+          }
+
+          SoundFX.playAdd();
+          state.tasks.forEach((t) => {
+            if (t.completed) {
+              t.completed = false;
+              t.completedAt = null;
+            }
+          });
+          saveTasks();
+          render();
+          showToast(`🌅 Daily reset: ${completedTasks.length} quest(s) uncompleted for a fresh day!`);
+        }
+
+        function clearCompletedTasks() {
+          const completedCount = state.tasks.filter((t) => t.completed).length;
+          if (completedCount === 0) return;
+
+          SoundFX.playDelete();
+          state.tasks = state.tasks.filter((t) => !t.completed);
+          saveTasks();
+          render();
+          showToast(`🧹 Cleared ${completedCount} finished quests!`);
+        }
+
+        /* ============================================================
+           DOM RENDERING & VIEW UPDATES
+           ============================================================ */
+        function render() {
+          const totalTasks = state.tasks.length;
+          const completedTasks = state.tasks.filter((t) => t.completed).length;
+          const pendingTasks = totalTasks - completedTasks;
+          const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+          // 1. Update Counts & Tabs
+          document.getElementById("countAllTab").textContent = totalTasks;
+          document.getElementById("countPendingTab").textContent = pendingTasks;
+          document.getElementById("countCompletedTab").textContent = completedTasks;
+
+          // Category Counts
+          const catCounts = { all: totalTasks, work: 0, personal: 0, health: 0, study: 0, adventure: 0 };
+          state.tasks.forEach((t) => {
+            const cat = t.category || "personal";
+            if (catCounts[cat] !== undefined) catCounts[cat]++;
+          });
+
+          const countCatAllEl = document.getElementById("countCatAll");
+          if (countCatAllEl) countCatAllEl.textContent = catCounts.all;
+          const countCatWorkEl = document.getElementById("countCatWork");
+          if (countCatWorkEl) countCatWorkEl.textContent = catCounts.work;
+          const countCatPersonalEl = document.getElementById("countCatPersonal");
+          if (countCatPersonalEl) countCatPersonalEl.textContent = catCounts.personal;
+          const countCatHealthEl = document.getElementById("countCatHealth");
+          if (countCatHealthEl) countCatHealthEl.textContent = catCounts.health;
+          const countCatStudyEl = document.getElementById("countCatStudy");
+          if (countCatStudyEl) countCatStudyEl.textContent = catCounts.study;
+          const countCatAdventureEl = document.getElementById("countCatAdventure");
+          if (countCatAdventureEl) countCatAdventureEl.textContent = catCounts.adventure;
+
+          // Highlight active category tab
+          document.querySelectorAll(".cat-filter-tab").forEach((tab) => {
+            const isActive = tab.dataset.cat === state.categoryFilter;
+            tab.classList.toggle("active", isActive);
+            tab.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+
+          document.getElementById("pendingSectionCount").textContent = `(${pendingTasks})`;
+          document.getElementById("completedSectionCount").textContent = `(${completedTasks})`;
+
+          document.getElementById("questCountsSummary").textContent =
+            `${pendingTasks} PENDING · ${completedTasks} COMPLETED (${totalTasks} TOTAL)`;
+
+          // 2. Clear & Reset completed button states
+          const clearBtn = document.getElementById("clearCompletedBtn");
+          if (clearBtn) clearBtn.disabled = completedTasks === 0;
+
+          const resetBtn = document.getElementById("resetCompletedBtn");
+          if (resetBtn) resetBtn.disabled = completedTasks === 0;
+
+          const sectionResetBtn = document.getElementById("sectionResetCompletedBtn");
+          if (sectionResetBtn) sectionResetBtn.disabled = completedTasks === 0;
+
+          // 3. Update Progress Bar & Hero Rank
+          const progressFill = document.getElementById("pixelProgressFill");
+          const progressLabel = document.getElementById("progressPercentageLabel");
+          const progressBar = document.getElementById("pixelProgressBar");
+
+          progressFill.style.width = percentage + "%";
+          progressLabel.textContent = `LEVEL PROGRESS: ${percentage}% (${completedTasks}/${totalTasks} CLEARED)`;
+          progressBar.setAttribute("aria-valuenow", percentage);
+
+          // Update Hero Rank Label
+          const rankEl = document.getElementById("heroRankDisplay");
+          let rankTitle = "NOVICE ADVENTURER";
+          if (completedTasks >= 10) rankTitle = "LEGENDARY HERO 👑";
+          else if (completedTasks >= 6) rankTitle = "VETERAN PALADIN ⚔️";
+          else if (completedTasks >= 3) rankTitle = "QUESTING APPRENTICE ⭐";
+          rankEl.innerHTML = `<span>👑 RANK: ${rankTitle}</span>`;
+
+          // 4. Celebration Banner & Sky Fireworks Trigger
+          const celebBanner = document.getElementById("celebrationBanner");
+          const isNow100 = totalTasks > 0 && percentage === 100;
+          if (isNow100) {
+            if (!state.hasTriggered100Fireworks) {
+              state.hasTriggered100Fireworks = true;
+              triggerSkyFireworks();
+            }
+            if (!celebBanner.classList.contains("active")) {
+              celebBanner.classList.add("active");
+              SoundFX.playCelebrate();
+            }
+          } else {
+            state.hasTriggered100Fireworks = false;
+            celebBanner.classList.remove("active");
+          }
+
+          // 5. Render Task Lists
+          const pendingListEl = document.getElementById("pendingQuestList");
+          const completedListEl = document.getElementById("completedQuestList");
+          const pendingSection = document.getElementById("pendingSection");
+          const completedSection = document.getElementById("completedSection");
+          const emptyState = document.getElementById("emptyStateDisplay");
+
+          pendingListEl.innerHTML = "";
+          completedListEl.innerHTML = "";
+
+          // Determine which sections are visible based on filter
+          if (state.filter === "pending") {
+            pendingSection.style.display = "block";
+            completedSection.style.display = "none";
+          } else if (state.filter === "completed") {
+            pendingSection.style.display = "none";
+            completedSection.style.display = "block";
+          } else {
+            pendingSection.style.display = "block";
+            completedSection.style.display = "block";
+          }
+
+          // Filter tasks
+          let visibleTasksCount = 0;
+
+          state.tasks.forEach((task) => {
+            if (state.filter === "pending" && task.completed) return;
+            if (state.filter === "completed" && !task.completed) return;
+            if (state.categoryFilter !== "all" && (task.category || "personal") !== state.categoryFilter) return;
+
+            visibleTasksCount++;
+            const itemEl = createTaskCardElement(task);
+
+            if (task.completed) {
+              completedListEl.appendChild(itemEl);
+            } else {
+              pendingListEl.appendChild(itemEl);
+            }
+          });
+
+          // Empty state handling
+          if (visibleTasksCount === 0) {
+            emptyState.style.display = "flex";
+            const emptyTitle = document.getElementById("emptyStateTitle");
+            const emptyDesc = document.getElementById("emptyStateDesc");
+
+            if (state.categoryFilter !== "all") {
+              const catObj = CATEGORIES[state.categoryFilter] || { name: state.categoryFilter };
+              emptyTitle.textContent = `NO ${catObj.name.toUpperCase()} QUESTS`;
+              emptyDesc.textContent = `No quests in '${catObj.name}' category yet. Select another filter or forge a new quest!`;
+            } else if (state.filter === "pending") {
+              emptyTitle.textContent = "NO PENDING QUESTS!";
+              emptyDesc.textContent = "All pending tasks are conquered! Enjoy a well-deserved rest, hero.";
+            } else if (state.filter === "completed") {
+              emptyTitle.textContent = "NO COMPLETED QUESTS YET";
+              emptyDesc.textContent = "Finish a quest in your pending log to claim glory and XP!";
+            } else {
+              emptyTitle.textContent = "NO QUESTS FOUND";
+              emptyDesc.textContent = "Your quest log is empty. Forge a new task above to begin your journey!";
+            }
+          } else {
+            emptyState.style.display = "none";
+          }
+
+          // Hide individual empty section containers when in "all" filter
+          if (state.filter === "all") {
+            pendingSection.style.display = pendingTasks > 0 ? "block" : "none";
+            completedSection.style.display = completedTasks > 0 ? "block" : "none";
+          }
+        }
+
+        /* ============================================================
+           TASK CARD ELEMENT CREATOR (PREVENTS XSS WITH TEXTCONTENT)
+           ============================================================ */
+        function createTaskCardElement(task) {
+          const li = document.createElement("li");
+          const hasNotes = Boolean(task.notes && task.notes.trim());
+          const isExpanded = state.expandedTaskIds.has(task.id);
+          li.className = `quest-item ${task.completed ? "is-completed" : ""} ${hasNotes ? "has-notes" : ""} ${isExpanded ? "is-expanded" : ""}`;
+          li.id = task.id;
+
+          // 1. Checkbox Button
+          const checkBtn = document.createElement("button");
+          checkBtn.type = "button";
+          checkBtn.className = "pixel-checkbox-btn";
+          checkBtn.setAttribute("aria-label", task.completed ? "Mark quest incomplete" : "Mark quest complete");
+          checkBtn.setAttribute("title", task.completed ? "Mark incomplete" : "Mark complete");
+
+          const checkGlyph = document.createElement("span");
+          checkGlyph.className = "checkbox-glyph";
+          checkGlyph.textContent = "✔";
+          checkBtn.appendChild(checkGlyph);
+
+          checkBtn.addEventListener("click", () => toggleTaskComplete(task.id));
+          li.appendChild(checkBtn);
+
+          // 2. Content Area
+          const contentArea = document.createElement("div");
+          contentArea.className = "quest-content-area";
+
+          // If in editing mode for this task
+          if (state.editingTaskId === task.id) {
+            const editWrapper = document.createElement("div");
+            editWrapper.className = "inline-edit-wrapper";
+            editWrapper.style.flexDirection = "column";
+            editWrapper.style.alignItems = "stretch";
+            editWrapper.style.gap = "6px";
+
+            const titleRow = document.createElement("div");
+            titleRow.style.display = "flex";
+            titleRow.style.gap = "6px";
+            titleRow.style.alignItems = "center";
+            titleRow.style.flexWrap = "wrap";
+
+            const editInput = document.createElement("input");
+            editInput.type = "text";
+            editInput.className = "inline-edit-input";
+            editInput.value = task.text;
+            editInput.maxLength = 140;
+            editInput.placeholder = "Quest title...";
+            editInput.style.flex = "1";
+
+            // Category selector in edit
+            const editCatSelect = document.createElement("select");
+            editCatSelect.className = "inline-edit-cat-select";
+            Object.values(CATEGORIES).forEach((c) => {
+              const opt = document.createElement("option");
+              opt.value = c.id;
+              opt.textContent = `${c.icon} ${c.name}`;
+              if (c.id === (task.category || "personal")) opt.selected = true;
+              editCatSelect.appendChild(opt);
+            });
+
+            const saveBtn = document.createElement("button");
+            saveBtn.type = "button";
+            saveBtn.className = "inline-btn inline-btn-save";
+            saveBtn.textContent = "✔ SAVE";
+
+            const cancelBtn = document.createElement("button");
+            cancelBtn.type = "button";
+            cancelBtn.className = "inline-btn inline-btn-cancel";
+            cancelBtn.textContent = "✖ CANCEL";
+
+            titleRow.appendChild(editInput);
+            titleRow.appendChild(editCatSelect);
+            titleRow.appendChild(saveBtn);
+            titleRow.appendChild(cancelBtn);
+
+            const editNotesInput = document.createElement("textarea");
+            editNotesInput.className = "inline-edit-notes-input";
+            editNotesInput.value = task.notes || "";
+            editNotesInput.rows = 2;
+            editNotesInput.maxLength = 300;
+            editNotesInput.placeholder = "📝 Quest notes / lore details (optional)...";
+
+            const handleSave = () => {
+              if (!saveTaskEdit(task.id, editInput.value, editNotesInput.value, editCatSelect.value)) {
+                editInput.classList.add("pixel-shake");
+                SoundFX.playError();
+                setTimeout(() => editInput.classList.remove("pixel-shake"), 400);
+              }
+            };
+
+            saveBtn.addEventListener("click", handleSave);
+            cancelBtn.addEventListener("click", cancelTaskEdit);
+
+            editInput.addEventListener("keydown", (e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleSave();
+              } else if (e.key === "Escape") {
+                e.preventDefault();
+                cancelTaskEdit();
+              }
+            });
+
+            editNotesInput.addEventListener("keydown", (e) => {
+              if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                handleSave();
+              } else if (e.key === "Escape") {
+                e.preventDefault();
+                cancelTaskEdit();
+              }
+            });
+
+            editWrapper.appendChild(titleRow);
+            editWrapper.appendChild(editNotesInput);
+            contentArea.appendChild(editWrapper);
+
+            // Auto-focus input
+            setTimeout(() => {
+              editInput.focus();
+              editInput.select();
+            }, 30);
+
+          } else {
+            // Standard Text Display (Safe textContent)
+            const titleEl = document.createElement("div");
+            titleEl.className = "quest-title-display";
+            titleEl.textContent = task.text;
+            contentArea.appendChild(titleEl);
+
+            // Metadata Line
+            const metaLine = document.createElement("div");
+            metaLine.className = "quest-meta-line";
+
+            // Category Badge
+            const taskCategory = task.category || "personal";
+            const catInfo = CATEGORIES[taskCategory] || CATEGORIES.personal;
+            const catBadge = document.createElement("span");
+            catBadge.className = `quest-category-badge cat-${taskCategory}`;
+            catBadge.textContent = `${catInfo.icon} ${catInfo.name.toUpperCase()}`;
+            catBadge.title = `Category: ${catInfo.name}`;
+            metaLine.appendChild(catBadge);
+
+            // Priority Badge (Interactive, cycles on click)
+            const priorityBadge = document.createElement("button");
+            priorityBadge.type = "button";
+            priorityBadge.className = `card-priority-badge badge-${task.priority}`;
+            priorityBadge.title = "Click to cycle priority (Low -> Med -> High)";
+
+            const dot = document.createElement("span");
+            dot.className = `p-dot p-dot-${task.priority}`;
+            priorityBadge.appendChild(dot);
+
+            const priorityText = document.createElement("span");
+            priorityText.textContent = task.priority.toUpperCase();
+            priorityBadge.appendChild(priorityText);
+
+            priorityBadge.addEventListener("click", (e) => {
+              e.stopPropagation();
+              cycleTaskPriority(task.id);
+            });
+            metaLine.appendChild(priorityBadge);
+
+            // Optional Notes Badge Tag (Interactive, toggles expanded state)
+            if (hasNotes) {
+              const notesBadge = document.createElement("button");
+              notesBadge.type = "button";
+              notesBadge.className = `card-notes-tag ${isExpanded ? "is-active" : ""}`;
+              notesBadge.title = isExpanded
+                ? "Click to collapse notes"
+                : "Click to keep notes open (also visible on hover)";
+              notesBadge.setAttribute("aria-expanded", isExpanded ? "true" : "false");
+
+              const notesIcon = document.createElement("span");
+              notesIcon.textContent = "📜";
+              notesBadge.appendChild(notesIcon);
+
+              const notesLabel = document.createElement("span");
+              notesLabel.textContent = isExpanded ? "NOTES ▲" : "NOTES ▼";
+              notesBadge.appendChild(notesLabel);
+
+              notesBadge.addEventListener("click", (e) => {
+                e.stopPropagation();
+                toggleTaskExpanded(task.id);
+              });
+
+              metaLine.appendChild(notesBadge);
+            }
+
+            // Optional Due Date Tag
+            if (task.dueDate) {
+              const dueTag = document.createElement("span");
+              const overdue = !task.completed && isTaskOverdue(task.dueDate);
+              dueTag.className = `due-date-tag ${overdue ? "is-overdue" : ""}`;
+              dueTag.textContent = overdue
+                ? `⚠️ OVERDUE (${formatDueDateDisplay(task.dueDate)})`
+                : `📅 DUE: ${formatDueDateDisplay(task.dueDate)}`;
+              metaLine.appendChild(dueTag);
+            }
+
+            // Timestamps
+            const createdSpan = document.createElement("span");
+            createdSpan.className = "meta-timestamp";
+            createdSpan.textContent = `· Added: ${formatDateTime(task.createdAt)}`;
+            metaLine.appendChild(createdSpan);
+
+            if (task.completed && task.completedAt) {
+              const completedSpan = document.createElement("span");
+              completedSpan.className = "meta-timestamp";
+              completedSpan.textContent = `· Conquered: ${formatDateTime(task.completedAt)}`;
+              metaLine.appendChild(completedSpan);
+            }
+
+            contentArea.appendChild(metaLine);
+
+            // Notes Drawer (Visible when hovered or expanded)
+            if (hasNotes) {
+              const notesDrawer = document.createElement("div");
+              notesDrawer.className = "quest-notes-drawer";
+              notesDrawer.setAttribute("aria-label", "Quest Notes");
+
+              const notesHeader = document.createElement("div");
+              notesHeader.className = "quest-notes-header";
+              notesHeader.textContent = "📜 QUEST NOTES & LORE:";
+
+              const notesBody = document.createElement("div");
+              notesBody.className = "quest-notes-body";
+              notesBody.textContent = task.notes;
+
+              notesDrawer.appendChild(notesHeader);
+              notesDrawer.appendChild(notesBody);
+              contentArea.appendChild(notesDrawer);
+            }
+          }
+
+          li.appendChild(contentArea);
+
+          // 3. Action Buttons (Edit & Delete)
+          if (state.editingTaskId !== task.id) {
+            const actionGroup = document.createElement("div");
+            actionGroup.className = "quest-action-buttons";
+
+            const editBtn = document.createElement("button");
+            editBtn.type = "button";
+            editBtn.className = "quest-action-btn btn-edit";
+            editBtn.textContent = "✎ EDIT";
+            editBtn.title = "Edit quest title & notes";
+            editBtn.addEventListener("click", () => {
+              state.editingTaskId = task.id;
+              SoundFX.playCycle();
+              render();
+            });
+
+            const delBtn = document.createElement("button");
+            delBtn.type = "button";
+            delBtn.className = "quest-action-btn btn-delete";
+            delBtn.textContent = "✕ DEL";
+            delBtn.title = "Delete quest";
+            delBtn.addEventListener("click", () => {
+              deleteTaskWithPoof(task.id, li);
+            });
+
+            actionGroup.appendChild(editBtn);
+            actionGroup.appendChild(delBtn);
+            li.appendChild(actionGroup);
+          }
+
+          return li;
+        }
+
+        /* ============================================================
+           FORM CONTROLS & EVENT LISTENERS
+           ============================================================ */
+        function initEvents() {
+          const taskForm = document.getElementById("addTaskForm");
+          const taskInput = document.getElementById("taskTextInput");
+          const taskNotesInput = document.getElementById("taskNotesInput");
+          const dueDateInput = document.getElementById("taskDueDateInput");
+          const inputErrorFeedback = document.getElementById("inputErrorFeedback");
+
+          // Category Choice Buttons in Add Form
+          const catChoiceButtons = document.querySelectorAll(".cat-choice-btn");
+          catChoiceButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              catChoiceButtons.forEach((b) => {
+                b.classList.remove("selected");
+                b.setAttribute("aria-checked", "false");
+              });
+              btn.classList.add("selected");
+              btn.setAttribute("aria-checked", "true");
+              state.selectedCategory = btn.dataset.category;
+              SoundFX.playCycle();
+            });
+          });
+
+          // Priority Buttons in Add Form
+          const priorityButtons = document.querySelectorAll(".p-choice-btn");
+          priorityButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              priorityButtons.forEach((b) => {
+                b.classList.remove("selected");
+                b.setAttribute("aria-checked", "false");
+              });
+              btn.classList.add("selected");
+              btn.setAttribute("aria-checked", "true");
+              state.selectedPriority = btn.dataset.priority;
+              SoundFX.playCycle();
+            });
+          });
+
+          // Add Task Form Submit Handler
+          taskForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const text = taskInput.value;
+            const notes = taskNotesInput ? taskNotesInput.value : "";
+            const dueDate = dueDateInput.value;
+
+            if (!text || !text.trim()) {
+              // Gentle Pixel Shake on Error
+              taskInput.classList.add("pixel-shake");
+              inputErrorFeedback.classList.add("visible");
+              SoundFX.playError();
+              setTimeout(() => {
+                taskInput.classList.remove("pixel-shake");
+              }, 400);
+              return;
+            }
+
+            inputErrorFeedback.classList.remove("visible");
+            const success = addTask(text, state.selectedPriority, dueDate, notes, state.selectedCategory);
+            if (success) {
+              taskInput.value = "";
+              if (taskNotesInput) taskNotesInput.value = "";
+              dueDateInput.value = "";
+              taskInput.focus();
+            }
+          });
+
+          // Clear error message on typing
+          taskInput.addEventListener("input", () => {
+            if (inputErrorFeedback.classList.contains("visible")) {
+              inputErrorFeedback.classList.remove("visible");
+            }
+          });
+
+          // Status Filter Tab Buttons
+          const filterTabs = document.querySelectorAll(".filter-tab-btn");
+          filterTabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+              filterTabs.forEach((t) => {
+                t.classList.remove("active");
+                t.setAttribute("aria-selected", "false");
+              });
+              tab.classList.add("active");
+              tab.setAttribute("aria-selected", "true");
+              state.filter = tab.dataset.filter;
+              SoundFX.playCycle();
+              render();
+            });
+          });
+
+          // Category Filter Tab Buttons
+          const catFilterTabs = document.querySelectorAll(".cat-filter-tab");
+          catFilterTabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+              state.categoryFilter = tab.dataset.cat;
+              SoundFX.playCycle();
+              render();
+            });
+          });
+
+          // Reset Completed Tasks (Daily Reset) Buttons
+          const resetCompletedBtn = document.getElementById("resetCompletedBtn");
+          if (resetCompletedBtn) {
+            resetCompletedBtn.addEventListener("click", () => {
+              resetCompletedTasks();
+            });
+          }
+
+          const sectionResetBtn = document.getElementById("sectionResetCompletedBtn");
+          if (sectionResetBtn) {
+            sectionResetBtn.addEventListener("click", () => {
+              resetCompletedTasks();
+            });
+          }
+
+          // Clear Completed Button
+          const clearCompletedBtn = document.getElementById("clearCompletedBtn");
+          if (clearCompletedBtn) {
+            clearCompletedBtn.addEventListener("click", () => {
+              clearCompletedTasks();
+            });
+          }
+
+          // Time of Day Controller Buttons
+          document.querySelectorAll(".time-toggle-btn").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const timeMode = btn.dataset.time;
+              updateSkyTheme(timeMode);
+              SoundFX.playCycle();
+              showToast(`⏰ Sky theme set to ${timeMode.toUpperCase()}`);
+            });
+          });
+
+          // SFX Toggle Button
+          const sfxBtn = document.getElementById("sfxToggleBtn");
+          const sfxIcon = document.getElementById("sfxIcon");
+          const sfxLabel = document.getElementById("sfxLabel");
+
+          function updateSfxButtonUI() {
+            if (state.sfxEnabled) {
+              sfxBtn.classList.add("active");
+              sfxBtn.setAttribute("aria-pressed", "true");
+              sfxIcon.textContent = "🔊";
+              sfxLabel.textContent = "SFX: ON";
+            } else {
+              sfxBtn.classList.remove("active");
+              sfxBtn.setAttribute("aria-pressed", "false");
+              sfxIcon.textContent = "🔇";
+              sfxLabel.textContent = "SFX: OFF";
+            }
+          }
+
+          sfxBtn.addEventListener("click", () => {
+            state.sfxEnabled = !state.sfxEnabled;
+            saveSfxSetting();
+            updateSfxButtonUI();
+            if (state.sfxEnabled) {
+              SoundFX.playAdd();
+              showToast("🔊 Retro Sound Effects Activated!");
+            } else {
+              showToast("🔇 Sound Effects Muted.");
+            }
+          });
+
+          updateSfxButtonUI();
+
+          // Celebratory Firework Replay Button
+          const fireworkReplayBtn = document.getElementById("fireworkReplayBtn");
+          if (fireworkReplayBtn) {
+            fireworkReplayBtn.addEventListener("click", () => {
+              triggerSkyFireworks();
+            });
+          }
+
+          // Title bar decorative buttons sound feedback
+          document.querySelectorAll(".win-btn").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              SoundFX.playCycle();
+            });
+          });
+        }
+
+        /* ============================================================
+           INITIALIZATION
+           Each step is isolated in its own try/catch so that a single
+           failure (e.g. corrupted localStorage from an older version)
+           cannot silently stop the rest of the app from initializing —
+           buttons must still respond even if one step fails.
+           ============================================================ */
+        try { loadState(); } catch (e) { console.error("loadState failed", e); state.tasks = state.tasks || [...DEFAULT_QUESTS]; }
+        try { initEvents(); } catch (e) { console.error("initEvents failed", e); }
+        try { updateSkyTheme("auto"); } catch (e) { console.error("updateSkyTheme failed", e); }
+        try {
+          setInterval(() => {
+            if (state.timeMode === "auto") {
+              try { updateSkyTheme("auto"); } catch (e) { console.error(e); }
+            }
+          }, 30000);
+        } catch (e) { console.error("interval setup failed", e); }
+        try { render(); } catch (e) { console.error("render failed", e); }
+      })();
+    </script>
+  </body>
+</html>
