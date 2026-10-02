@@ -1,6 +1,0 @@
-{
-  "name": "PixelQuest To-Do",
-  "description": "A cute retro 8-bit pixel-art interactive to-do web app with living scene, priorities, and sound effects.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
